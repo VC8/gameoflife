@@ -42,14 +42,16 @@ public class Board {
                 // 1. living cell with less than 2 living neighbors dies
                 if (cell.isAlive() && livingNeighborCount < 2) return new Cell(cell.getRow(), cell.getCol(), false);
 
+                // 2. cell with 2 or 3 living neighbors stays alive
+                if (cell.isAlive() && livingNeighborCount == 2 || cell.isAlive() && livingNeighborCount == 3)return new Cell(cell.getRow(), cell.getCol(), true);
+
                 // 3. living cell with more than 3 living neighbors dies
                 if (cell.isAlive() && livingNeighborCount > 3) return new Cell(cell.getRow(), cell.getCol(), false);
 
                 // 4. dead cell with 3 living neighbors comes to life
                 if (!cell.isAlive() && livingNeighborCount == 3) return new Cell(cell.getRow(), cell.getCol(), true);
 
-                // 2. cell with 2 or 3 living neighbors stays alive
-                return new Cell(cell.getRow(), cell.getCol(), true);
+                return cell;
             }).collect(Collectors.toList());
 
             // convert list to array
