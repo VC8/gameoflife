@@ -1,13 +1,13 @@
 package de.cassens.gameoflife;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Board {
 
     private Cell[][] cells;
     private int generation;
+    private int maxRowPos;
+    private int maxColPos;
 
     public Board(int rows, int cols) {
         this.generation = 0;
@@ -19,6 +19,9 @@ public class Board {
                 this.cells[row][col] = new Cell(row, col, isAlive);
             }
         }
+
+        this.maxRowPos = rows - 1;
+        this.maxColPos = cols - 1;
     }
 
     public void printBoard() {
@@ -30,51 +33,42 @@ public class Board {
     }
 
     public void nextGeneration() {
-        int maxRows = this.cells.length - 1;
-        Arrays.stream(this.cells).forEach(row -> {
-            int maxCols = row.length - 1;
+        Arrays.stream(this.cells).forEach(row -> Arrays.stream(row).forEach(cell -> {
+            // get current position
+            int rowPos = cell.getRow();
+            int colPos = cell.getCol();
 
-            Arrays.stream(row).forEach(cell -> {
-                // get current position
-                int rowPos = cell.getRow();
-                int colPos = cell.getCol();
+            // prepare neighbor positions
+            int leftCol = colPos - 1;
+            if (leftCol < 0) leftCol = this.maxColPos; // if the left neighbors are on the other side of the board
+            int rightCol = colPos + 1;
+            if (rightCol > this.maxColPos) rightCol = 0; // if the right neighbors are on the other side of the board
 
-                // prepare neighbors
-                int leftCol = colPos - 1;
-                if (leftCol < 0) leftCol = maxCols; // if the left neighbors are on the other side of the board
-                int rightCol = colPos + 1;
-                if (rightCol > maxCols) rightCol = 0; // if the right neighbors are on the other side of the board
-                int rowAbove = rowPos - 1;
-                if (rowAbove < 0) rowAbove = maxRows; // if the neighbors above are on the other side of the board
-                int rowBelow = rowPos + 1;
-                if (rowBelow > maxRows) rowBelow = 0; // if the neighbors below are on the other side of the board
+            int rowAbove = rowPos - 1;
+            if (rowAbove < 0) rowAbove = this.maxRowPos; // if the neighbors above are on the other side of the board
+            int rowBelow = rowPos + 1;
+            if (rowBelow > this.maxRowPos) rowBelow = 0; // if the neighbors below are on the other side of the board
 
-                // add status of neighbors to array
-                List<Boolean> neighbors = new ArrayList<>();
-                neighbors.add(this.cells[rowPos][leftCol].isAlive());
-                neighbors.add(this.cells[rowAbove][leftCol].isAlive());
-                neighbors.add(this.cells[rowAbove][colPos].isAlive());
-                neighbors.add(this.cells[rowAbove][rightCol].isAlive());
-                neighbors.add(this.cells[rowPos][rightCol].isAlive());
-                neighbors.add(this.cells[rowBelow][rightCol].isAlive());
-                neighbors.add(this.cells[rowBelow][colPos].isAlive());
-                neighbors.add(this.cells[rowBelow][leftCol].isAlive());
+            // add status of neighbors to array
+            int livingNeighborCount = 0;
+            livingNeighborCount += this.cells[rowPos][leftCol].isAlive() ? 1 : 0;
+            livingNeighborCount += this.cells[rowAbove][leftCol].isAlive() ? 1 : 0;
+            livingNeighborCount += this.cells[rowAbove][colPos].isAlive() ? 1 : 0;
+            livingNeighborCount += this.cells[rowAbove][rowAbove].isAlive() ? 1 : 0;
+            livingNeighborCount += this.cells[rowPos][rightCol].isAlive() ? 1 : 0;
+            livingNeighborCount += this.cells[rowBelow][rightCol].isAlive() ? 1 : 0;
+            livingNeighborCount += this.cells[rowBelow][colPos].isAlive() ? 1 : 0;
+            livingNeighborCount += this.cells[rowBelow][leftCol].isAlive() ? 1 : 0;
 
-                long livingNeighborCount = neighbors.stream().filter(Boolean::booleanValue).count();
+            // 1. living cell with less than 2 living neighbors dies
+            if (cell.isAlive() && livingNeighborCount < 2) cell.setAlive(false);
 
-                // 1. living cell with less than 2 living neighbors dies
-                if (cell.isAlive() && livingNeighborCount < 2) cell.setAlive(false);
+            // 3. living cell with more than 3 living neighbors dies
+            if (cell.isAlive() && livingNeighborCount > 3) cell.setAlive(false);
 
-                // 2. living cell with 2 or more living neighbors stays alive
-                if (cell.isAlive() && livingNeighborCount == 2 || cell.isAlive() && livingNeighborCount == 3) cell.setAlive(true); // can be deleted
-
-                // 3. living cell with more than 3 living neighbors dies
-                if (cell.isAlive() && livingNeighborCount > 3) cell.setAlive(false);
-
-                // 4. dead cell with 3 living neighbors comes to life
-                if (!cell.isAlive() && livingNeighborCount == 3) cell.setAlive(true);
-            });
-        });
+            // 4. dead cell with 3 living neighbors comes to life
+            if (!cell.isAlive() && livingNeighborCount == 3) cell.setAlive(true);
+        }));
 
         this.generation++;
     }
