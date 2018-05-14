@@ -5,8 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.util.Arrays;
-
 @SpringBootApplication
 public class TheGameOfLifeApplication implements CommandLineRunner {
 
@@ -19,21 +17,14 @@ public class TheGameOfLifeApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         int rows = 5;
         int cols = 5;
+        int generations = 5;
 
         Board board = new Board(rows, cols);
-
         board.printBoard();
 
-        board.nextGeneration();
-
-        board.printBoard();
-
-        board.nextGeneration();
-
-        board.printBoard();
-
-        board.nextGeneration();
-
-        board.printBoard();
+        for (int i = 0; i < generations; i++) {
+            board.nextGeneration();
+            board.printBoard();
+        }
     }
 }
