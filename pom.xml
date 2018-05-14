@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>The Game of Life</name>
-    <description></description>
+    <description>This is an implementation of the Game of Life</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -34,11 +34,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
