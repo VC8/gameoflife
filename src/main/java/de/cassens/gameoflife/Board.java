@@ -23,7 +23,7 @@ public class Board {
     // TODO rename
     public void nextGeneration() {
         CellStateUpdater cellStateUpdater = new CellStateUpdater(this.cells);
-        this.cells = cellStateUpdater.updateCells();
+        this.cells = cellStateUpdater.updateCellStates();
 
         this.generation++;
     }

@@ -15,7 +15,7 @@ public class CellStateUpdaterTest {
     @Test
     public void shouldReturnCellStatesForNextGeneration() {
         // when
-        Cell[][] updatedCells = cellStateUpdater.updateCells();
+        Cell[][] updatedCells = cellStateUpdater.updateCellStates();
 
         // then
         assertThat(updatedCells.length, is(board.length));

@@ -14,7 +14,7 @@ public class CellStateUpdater {
         this.cells = cells;
     }
 
-    public Cell[][] updateCells() {
+    public Cell[][] updateCellStates() {
         Cell[][] updatedCells = {};
         return Arrays.stream(this.cells).map(this::updateRowCellStates).collect(Collectors.toList()).toArray(updatedCells);
     }
