@@ -35,36 +35,45 @@ public class Board {
     }
 
     public void nextGeneration() {
-        List<Cell[]> newCells = Arrays.stream(this.cells).map(row -> {
-            List<Cell> rowCellsList = Arrays.stream(row).map(cell -> {
-                int livingNeighborCount = getLivingNeighborCountForCell(cell);
+        List<Cell[]> updatedCells = Arrays.stream(this.cells).map(this::updateCellStates).collect(Collectors.toList());
 
-                // 1. living cell with less than 2 living neighbors dies
-                if (cell.isAlive() && livingNeighborCount < 2) return new Cell(cell.getRow(), cell.getCol(), false);
-
-                // 2. cell with 2 or 3 living neighbors stays alive
-                if (cell.isAlive() && livingNeighborCount == 2 || cell.isAlive() && livingNeighborCount == 3)return new Cell(cell.getRow(), cell.getCol(), true);
-
-                // 3. living cell with more than 3 living neighbors dies
-                if (cell.isAlive() && livingNeighborCount > 3) return new Cell(cell.getRow(), cell.getCol(), false);
-
-                // 4. dead cell with 3 living neighbors comes to life
-                if (!cell.isAlive() && livingNeighborCount == 3) return new Cell(cell.getRow(), cell.getCol(), true);
-
-                return cell;
-            }).collect(Collectors.toList());
-
-            // convert list to array
-            Cell[] rowCellsArray = new Cell[rowCellsList.size()];
-            rowCellsList.toArray(rowCellsArray);
-
-            return rowCellsArray;
-        }).collect(Collectors.toList());
-
-        // update game cells
-        newCells.toArray(this.cells);
+        updateBoardCells(updatedCells);
 
         this.generation++;
+    }
+
+    private void updateBoardCells(List<Cell[]> updatedCells) {
+        updatedCells.toArray(this.cells);
+    }
+
+    private Cell[] updateCellStates(Cell[] row) {
+        List<Cell> rowCellsList = Arrays.stream(row).map(this::updateCellState).collect(Collectors.toList());
+
+        return convertCellListToCellArray(rowCellsList);
+    }
+
+    private Cell[] convertCellListToCellArray(List<Cell> cellList) {
+        Cell[] rowCellsArray = new Cell[cellList.size()];
+        cellList.toArray(rowCellsArray);
+        return rowCellsArray;
+    }
+
+    private Cell updateCellState(Cell cell) {
+        int livingNeighborCount = getLivingNeighborCountForCell(cell);
+
+        // 1. living cell with less than 2 living neighbors dies
+        if (cell.isAlive() && livingNeighborCount < 2) return new Cell(cell.getRow(), cell.getCol(), false);
+
+        // 2. cell with 2 or 3 living neighbors stays alive
+        if (cell.isAlive() && livingNeighborCount == 2 || cell.isAlive() && livingNeighborCount == 3)return new Cell(cell.getRow(), cell.getCol(), true);
+
+        // 3. living cell with more than 3 living neighbors dies
+        if (cell.isAlive() && livingNeighborCount > 3) return new Cell(cell.getRow(), cell.getCol(), false);
+
+        // 4. dead cell with 3 living neighbors comes to life
+        if (!cell.isAlive() && livingNeighborCount == 3) return new Cell(cell.getRow(), cell.getCol(), true);
+
+        return cell;
     }
 
     private int getLivingNeighborCountForCell(Cell cell) {
