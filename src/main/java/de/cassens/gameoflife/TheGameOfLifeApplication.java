@@ -26,7 +26,7 @@ public class TheGameOfLifeApplication implements CommandLineRunner {
         board.printBoard();
 
         for (int i = 0; i < generations; i++) {
-            board.nextGeneration();
+            board.nextCycle();
             board.printBoard();
         }
     }

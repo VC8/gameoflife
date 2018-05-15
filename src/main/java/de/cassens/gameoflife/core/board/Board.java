@@ -21,8 +21,7 @@ public class Board {
         boardPrinter.printBoard(this.generation, this.cells);
     }
 
-    // TODO rename
-    public void nextGeneration() {
+    public void nextCycle() {
         CellStateUpdater cellStateUpdater = new CellStateUpdater(this.cells);
         this.cells = cellStateUpdater.updateCellStates();
 
