@@ -3,6 +3,7 @@ package de.cassens.gameoflife;
 import de.cassens.gameoflife.core.boardprinter.BoardPrinter;
 import de.cassens.gameoflife.core.cellstateupdater.CellStateUpdater;
 import de.cassens.gameoflife.model.cell.Cell;
+import de.cassens.gameoflife.model.cell.CellFactory;
 
 public class Board {
 
@@ -34,7 +35,7 @@ public class Board {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 boolean isAlive = Math.random() < 0.4;
-                this.cells[row][col] = new Cell(row, col, isAlive);
+                this.cells[row][col] = CellFactory.createCell(row, col, isAlive);
             }
         }
     }
