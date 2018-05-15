@@ -1,4 +1,4 @@
-package de.cassens.gameoflife;
+package de.cassens.gameoflife.model.cell;
 
 import lombok.Value;
 

@@ -1,5 +1,7 @@
 package de.cassens.gameoflife;
 
+import de.cassens.gameoflife.model.cell.Cell;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
