@@ -38,7 +38,7 @@ public class Board {
 
     public void nextGeneration() {
         CellStateUpdater cellStateUpdater = new CellStateUpdater(this.cells);
-        this.cells = cellStateUpdater.getUpdatedCells();
+        this.cells = cellStateUpdater.updateCells();
 
         this.generation++;
     }

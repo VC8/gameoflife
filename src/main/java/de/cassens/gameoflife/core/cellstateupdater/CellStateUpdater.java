@@ -14,12 +14,12 @@ public class CellStateUpdater {
         this.cells = cells;
     }
 
-    public Cell[][] getUpdatedCells() {
+    public Cell[][] updateCells() {
         Cell[][] updatedCells = {};
-        return Arrays.stream(this.cells).map(this::updateCellStates).collect(Collectors.toList()).toArray(updatedCells);
+        return Arrays.stream(this.cells).map(this::updateRowCellStates).collect(Collectors.toList()).toArray(updatedCells);
     }
 
-    private Cell[] updateCellStates(Cell[] row) {
+    private Cell[] updateRowCellStates(Cell[] row) {
         Cell[] cellArray = {};
         return Arrays.stream(row).map(this::updateCellState).collect(Collectors.toList()).toArray(cellArray);
     }
@@ -36,7 +36,7 @@ public class CellStateUpdater {
         if (cell.isAlive() && livingNeighborCount < 2) return new Cell(cell.getRow(), cell.getCol(), false);
 
         // 2. cell with 2 or 3 living neighbors stays alive
-        if (cell.isAlive() && livingNeighborCount == 2 || cell.isAlive() && livingNeighborCount == 3)return new Cell(cell.getRow(), cell.getCol(), true);
+        if (cell.isAlive() && livingNeighborCount == 2 || cell.isAlive() && livingNeighborCount == 3) return new Cell(cell.getRow(), cell.getCol(), true);
 
         // 3. living cell with more than 3 living neighbors dies
         if (cell.isAlive() && livingNeighborCount > 3) return new Cell(cell.getRow(), cell.getCol(), false);
