@@ -1,4 +1,4 @@
-package de.cassens.gameoflife;
+package de.cassens.gameoflife.core.board;
 
 import de.cassens.gameoflife.core.boardprinter.BoardPrinter;
 import de.cassens.gameoflife.core.cellstateupdater.CellStateUpdater;
