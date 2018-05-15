@@ -1,6 +1,7 @@
 package de.cassens.gameoflife;
 
 import de.cassens.gameoflife.model.cell.Cell;
+import de.cassens.gameoflife.util.converter.CellListToCellArrayConverter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,13 +52,8 @@ public class Board {
     private Cell[] updateCellStates(Cell[] row) {
         List<Cell> rowCellsList = Arrays.stream(row).map(this::updateCellState).collect(Collectors.toList());
 
-        return convertCellListToCellArray(rowCellsList);
-    }
-
-    private Cell[] convertCellListToCellArray(List<Cell> cellList) {
-        Cell[] rowCellsArray = new Cell[cellList.size()];
-        cellList.toArray(rowCellsArray);
-        return rowCellsArray;
+        CellListToCellArrayConverter cellListToCellArrayConverter = new CellListToCellArrayConverter();
+        return cellListToCellArrayConverter.convertCellListToCellArray(rowCellsList);
     }
 
     private Cell updateCellState(Cell cell) {
