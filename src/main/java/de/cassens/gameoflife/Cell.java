@@ -1,15 +1,13 @@
 package de.cassens.gameoflife;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
-@Data
-@AllArgsConstructor
+@Value
 public class Cell {
 
-    private final int row;
-    private final int col;
-    private boolean isAlive;
+    int row;
+    int col;
+    boolean isAlive;
 
     @Override
     public String toString() {
