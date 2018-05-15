@@ -17,7 +17,7 @@ public class Board {
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                boolean isAlive = Math.random() < 0.5;
+                boolean isAlive = Math.random() < 0.4;
                 this.cells[row][col] = new Cell(row, col, isAlive);
             }
         }
