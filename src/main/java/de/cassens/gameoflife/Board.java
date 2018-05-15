@@ -2,6 +2,7 @@ package de.cassens.gameoflife;
 
 import de.cassens.gameoflife.model.cell.Cell;
 import de.cassens.gameoflife.util.converter.CellListToCellArrayConverter;
+import de.cassens.gameoflife.core.livingneighborcounter.LivingNeighborCounter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,7 +58,8 @@ public class Board {
     }
 
     private Cell updateCellState(Cell cell) {
-        int livingNeighborCount = getLivingNeighborCountForCell(cell);
+        LivingNeighborCounter livingNeighborCounter = new LivingNeighborCounter();
+        int livingNeighborCount = livingNeighborCounter.countLivingNeighbors(cell, this.cells);
 
         // 1. living cell with less than 2 living neighbors dies
         if (cell.isAlive() && livingNeighborCount < 2) return new Cell(cell.getRow(), cell.getCol(), false);
@@ -72,35 +74,5 @@ public class Board {
         if (!cell.isAlive() && livingNeighborCount == 3) return new Cell(cell.getRow(), cell.getCol(), true);
 
         return cell;
-    }
-
-    private int getLivingNeighborCountForCell(Cell cell) {
-        // get current position
-        int rowPos = cell.getRow();
-        int colPos = cell.getCol();
-
-        // prepare neighbor positions
-        int leftCol = colPos - 1;
-        if (leftCol < 0) leftCol = this.maxColPos; // if the left neighbors are on the other side of the cells
-        int rightCol = colPos + 1;
-        if (rightCol > this.maxColPos) rightCol = 0; // if the right neighbors are on the other side of the cells
-
-        int rowAbove = rowPos - 1;
-        if (rowAbove < 0) rowAbove = this.maxRowPos; // if the neighbors above are on the other side of the cells
-        int rowBelow = rowPos + 1;
-        if (rowBelow > this.maxRowPos) rowBelow = 0; // if the neighbors below are on the other side of the cells
-
-        // add status of neighbors to array
-        int livingNeighborCount = 0;
-        livingNeighborCount += this.cells[rowPos][leftCol].isAlive() ? 1 : 0;
-        livingNeighborCount += this.cells[rowAbove][leftCol].isAlive() ? 1 : 0;
-        livingNeighborCount += this.cells[rowAbove][colPos].isAlive() ? 1 : 0;
-        livingNeighborCount += this.cells[rowAbove][rowAbove].isAlive() ? 1 : 0;
-        livingNeighborCount += this.cells[rowPos][rightCol].isAlive() ? 1 : 0;
-        livingNeighborCount += this.cells[rowBelow][rightCol].isAlive() ? 1 : 0;
-        livingNeighborCount += this.cells[rowBelow][colPos].isAlive() ? 1 : 0;
-        livingNeighborCount += this.cells[rowBelow][leftCol].isAlive() ? 1 : 0;
-
-        return livingNeighborCount;
     }
 }
