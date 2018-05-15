@@ -21,7 +21,7 @@ public class LivingNeighborCounterTest {
         int livingNeighborCount = livingNeighborCounter.countLivingNeighbors(cell, board);
 
         // then
-        assertThat(livingNeighborCount, is(5));
+        assertThat(livingNeighborCount, is(4));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class LivingNeighborCounterTest {
         int livingNeighborCount = livingNeighborCounter.countLivingNeighbors(cell, board);
 
         // then
-        assertThat(livingNeighborCount, is(4));
+        assertThat(livingNeighborCount, is(3));
     }
 
     @Test
@@ -45,6 +45,6 @@ public class LivingNeighborCounterTest {
         int livingNeighborCount = livingNeighborCounter.countLivingNeighbors(cell, board);
 
         // then
-        assertThat(livingNeighborCount, is(4));
+        assertThat(livingNeighborCount, is(3));
     }
 }
