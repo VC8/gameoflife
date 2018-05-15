@@ -1,19 +1,34 @@
 package de.cassens.gameoflife;
 
+import de.cassens.gameoflife.core.boardprinter.BoardPrinter;
 import de.cassens.gameoflife.core.cellstateupdater.CellStateUpdater;
 import de.cassens.gameoflife.model.cell.Cell;
-
-import java.util.Arrays;
 
 public class Board {
 
     private Cell[][] cells;
     private int generation;
-    private final int maxRowPos;
-    private final int maxColPos;
 
     public Board(int rows, int cols) {
         this.generation = 0;
+
+        createCells(rows, cols);
+    }
+
+    public void printBoard() {
+        BoardPrinter boardPrinter = new BoardPrinter();
+        boardPrinter.printBoard(this.generation, this.cells);
+    }
+
+    // TODO rename
+    public void nextGeneration() {
+        CellStateUpdater cellStateUpdater = new CellStateUpdater(this.cells);
+        this.cells = cellStateUpdater.updateCells();
+
+        this.generation++;
+    }
+
+    private void createCells(int rows, int cols) {
         this.cells = new Cell[rows][cols];
 
         for (int row = 0; row < rows; row++) {
@@ -22,24 +37,5 @@ public class Board {
                 this.cells[row][col] = new Cell(row, col, isAlive);
             }
         }
-
-        this.maxRowPos = rows - 1;
-        this.maxColPos = cols - 1;
-    }
-
-    public void printBoard() {
-        // TODO printer
-        System.out.println("----- print generation: " + this.generation + " -----");
-        Arrays.stream(this.cells).forEach(row -> {
-            Arrays.stream(row).forEach(System.out::print);
-            System.out.println();
-        });
-    }
-
-    public void nextGeneration() {
-        CellStateUpdater cellStateUpdater = new CellStateUpdater(this.cells);
-        this.cells = cellStateUpdater.updateCells();
-
-        this.generation++;
     }
 }
