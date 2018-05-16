@@ -1,9 +1,10 @@
 package de.cassens.gameoflife.model.cell;
 
-public class CellFactory {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-    private CellFactory() {
-    }
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class CellFactory {
 
     public static Cell createCell(int row, int col, boolean isAlive) {
         return new Cell(row, col, isAlive);
