@@ -11,13 +11,11 @@ import java.util.Arrays;
 // TODO delete after building frontend
 public class BoardPrinter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BoardPrinter.class);
-
     public void printBoard(int generation, Cell[][] board) {
         System.out.println("----- print generation: "+generation+" -----");
 
         Arrays.stream(board).forEach(row -> {
-            Arrays.stream(row).forEach(System.out::println);
+            Arrays.stream(row).forEach(System.out::print);
             System.out.println();
         });
     }
