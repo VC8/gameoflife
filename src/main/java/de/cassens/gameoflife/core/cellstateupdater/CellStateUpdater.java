@@ -33,17 +33,20 @@ public class CellStateUpdater {
     }
 
     private Cell getCellWithNewState(Cell cell, int livingNeighborCount) {
-        // 1. living cell with less than 2 living neighbors dies
-        if (cell.isAlive() && livingNeighborCount < 2) return CellFactory.createCell(cell, false);
 
-        // 2. cell with 2 or 3 living neighbors stays alive
-        if (cell.isAlive() && livingNeighborCount == 2 || cell.isAlive() && livingNeighborCount == 3) return CellFactory.createCell(cell, true);
+        if (cell.isAlive()) {
+            // #1 rule: living cell with less than 2 living neighbors dies
+            if (livingNeighborCount < 2) return CellFactory.createCell(cell, false);
 
-        // 3. living cell with more than 3 living neighbors dies
-        if (cell.isAlive() && livingNeighborCount > 3) return CellFactory.createCell(cell, false);
+            // #2 rule: living cell with 2 or 3 living neighbors stays alive
+            if (livingNeighborCount < 4) return cell;
 
-        // 4. dead cell with 3 living neighbors comes to life
-        if (!cell.isAlive() && livingNeighborCount == 3) return CellFactory.createCell(cell, true);
+            // #3 rule: living cell with more than 3 living neighbors dies
+            return CellFactory.createCell(cell, false);
+        }
+
+        // #4 rule: dead cell with 3 living neighbors comes to life
+        if (livingNeighborCount == 3) return CellFactory.createCell(cell, true);
 
         return cell;
     }
