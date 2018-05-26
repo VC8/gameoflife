@@ -1,33 +1,26 @@
 package de.cassens.gameoflife;
 
-import de.cassens.gameoflife.core.board.Board;
-import org.springframework.boot.CommandLineRunner;
+import com.mongodb.MongoClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-
-import static java.lang.Integer.parseInt;
+import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-public class TheGameOfLifeApplication implements CommandLineRunner {
+@EnableMongoRepositories
+public class TheGameOfLifeApplication extends AbstractMongoConfiguration {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(TheGameOfLifeApplication.class, args);
-        configurableApplicationContext.close();
+        SpringApplication.run(TheGameOfLifeApplication.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        int rows = parseInt(args[0]);
-        int cols = parseInt(args[1]);
-        int generations = parseInt(args[2]);
+    public MongoClient mongoClient() {
+        return new MongoClient();
+    }
 
-        Board board = new Board(rows, cols);
-        board.printBoard();
-
-        for (int i = 0; i < generations; i++) {
-            board.nextCycle();
-            board.printBoard();
-        }
+    @Override
+    protected String getDatabaseName() {
+        return "game_of_life";
     }
 }

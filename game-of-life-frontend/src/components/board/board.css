@@ -1,0 +1,14 @@
+.board {
+    display: table;
+    margin: 1em auto;
+}
+
+.generation-section {
+    margin-top: 1.8em;
+    color: #ADE25D;
+    filter: brightness(0.8);
+}
+
+.hide {
+    display: none;
+}

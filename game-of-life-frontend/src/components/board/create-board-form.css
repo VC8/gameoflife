@@ -1,0 +1,7 @@
+.create-board-form * {
+    margin-right: 1em;
+}
+
+.create-board-form .submit-btn span {
+    margin-right: 0;
+}

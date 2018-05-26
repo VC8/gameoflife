@@ -1,7 +1,7 @@
 package de.cassens.gameoflife.core.cellstateupdater;
 
-import de.cassens.gameoflife.model.cell.Cell;
-import de.cassens.gameoflife.testUtil.BoardFactory;
+import de.cassens.gameoflife.cell.model.Cell;
+import de.cassens.gameoflife.testUtil.TestBoardFactory;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,7 +9,7 @@ import static org.hamcrest.core.Is.is;
 
 public class CellStateUpdaterTest {
 
-    private final Cell[][] board = BoardFactory.createBoard();
+    private final Cell[][] board = TestBoardFactory.createBoard();
     private final CellStateUpdater cellStateUpdater = new CellStateUpdater(board);
 
     @Test

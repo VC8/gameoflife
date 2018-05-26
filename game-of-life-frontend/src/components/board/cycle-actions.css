@@ -1,0 +1,24 @@
+.cycle-actions {
+    margin-top: 1.4em;
+}
+
+.cycle-actions {
+    display: block;
+    margin: 0 auto;
+}
+
+.cycle-actions > .btn {
+    margin: 0 1em;
+}
+
+.cycle-actions > .action-label {
+    font-size: 0.9em;
+    display: inline-block;
+}
+
+.cycle-actions > .action-label.increment-label {
+    color: #3f51b5;
+}
+.cycle-actions > .action-label.decrement-label {
+    color: #f50057;
+}

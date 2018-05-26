@@ -1,6 +1,6 @@
 package de.cassens.gameoflife.core.livingneighborcounter;
 
-import de.cassens.gameoflife.model.cell.Cell;
+import de.cassens.gameoflife.cell.model.Cell;
 
 public class LivingNeighborCounter {
     public int countLivingNeighbors(Cell cell, Cell[][] cells) {

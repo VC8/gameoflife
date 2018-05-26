@@ -1,8 +1,8 @@
 package de.cassens.gameoflife.core.cellstateupdater;
 
 import de.cassens.gameoflife.core.livingneighborcounter.LivingNeighborCounter;
-import de.cassens.gameoflife.model.cell.Cell;
-import de.cassens.gameoflife.model.cell.CellFactory;
+import de.cassens.gameoflife.cell.model.Cell;
+import de.cassens.gameoflife.cell.model.CellFactory;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
