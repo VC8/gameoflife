@@ -38,16 +38,15 @@ public class CellStateUpdater {
             // #1 rule: living cell with less than 2 living neighbors dies
             if (livingNeighborCount < 2) return CellFactory.createCell(cell, false);
 
-            // #2 rule: living cell with 2 or 3 living neighbors stays alive
-            if (livingNeighborCount < 4) return cell;
-
             // #3 rule: living cell with more than 3 living neighbors dies
-            return CellFactory.createCell(cell, false);
+            if (livingNeighborCount > 3) return CellFactory.createCell(cell, false);
         }
 
         // #4 rule: dead cell with 3 living neighbors comes to life
-        if (livingNeighborCount == 3) return CellFactory.createCell(cell, true);
+        if (!cell.isAlive() && livingNeighborCount == 3) return CellFactory.createCell(cell, true);
 
+        // #2 rule: living cell with 2 or 3 living neighbors stays alive
+        // all rules are resulting in: dead cell with living neighbors != 3 stays dead
         return cell;
     }
 }
