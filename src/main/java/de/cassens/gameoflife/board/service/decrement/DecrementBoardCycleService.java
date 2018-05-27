@@ -14,7 +14,6 @@ public class DecrementBoardCycleService {
 
     private BoardEventRepository boardEventRepository;
     private BoardEventFactory boardEventFactory;
-    private static final String BOARD_DECREMENTED = "BOARD_DECREMENTED";
 
     @Autowired
     public DecrementBoardCycleService(BoardEventRepository boardEventRepository, BoardEventFactory boardEventFactory) {

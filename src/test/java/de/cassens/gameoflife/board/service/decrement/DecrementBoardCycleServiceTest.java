@@ -36,7 +36,10 @@ public class DecrementBoardCycleServiceTest {
     public void shouldDecrementBoardCycle() {
         // given
         BoardEvent boardEvent = mock(BoardEvent.class);
-        List<BoardEvent> boardEvents = Arrays.asList(mock(BoardEvent.class), boardEvent, mock(BoardEvent.class), mock(BoardEvent.class));
+        when(boardEvent.getGeneration()).thenReturn(2);
+        BoardEvent latestBoardEvent = mock(BoardEvent.class);
+        when(latestBoardEvent.getGeneration()).thenReturn(3);
+        List<BoardEvent> boardEvents = Arrays.asList(latestBoardEvent, boardEvent, mock(BoardEvent.class), mock(BoardEvent.class));
         when(boardEventRepository.findAll(eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(boardEvents);
 
         BoardEvent boardDecrementedEvent = mock(BoardEvent.class);
@@ -57,7 +60,7 @@ public class DecrementBoardCycleServiceTest {
 
         // expect
         expectedException.expect(IllegalStateException.class);
-        expectedException.expectMessage("cannot decrement not incremented board");
+        expectedException.expectMessage("cannot decrement board cycle. board is at initial state");
 
         // when
         decrementBoardCycleService.decrementBoardCycle();
