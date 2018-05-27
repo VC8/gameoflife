@@ -21,9 +21,7 @@ public class DecrementBoardCycleService {
         this.boardEventFactory = boardEventFactory;
     }
 
-    // TODO edit unit test
     public void decrementBoardCycle() {
-        // TODO performance ?
         List<BoardEvent> boardEvents = boardEventRepository.findAll(new Sort(Sort.Direction.DESC, "timestamp"));
 
         BoardEvent latestEvent = boardEvents.get(0);
