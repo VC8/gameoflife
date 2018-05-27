@@ -6,9 +6,12 @@ services:
     image: mongo:3.6
     ports:
       - "27017:27017"
-    volumes:
-      - "${PWD}/data:/data/db"
     restart: always
+  game_of_life:
+    container_name: game_of_life
+    image: vcassens/gameoflife:1.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
 #  rabbitmq:
 #    container_name: rabbit-mq
 #    image: rabbitmq: 3
