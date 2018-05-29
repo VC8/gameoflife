@@ -4,7 +4,7 @@ This is an implementation of the Game of Life
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development purposes. See running for notes on how to run the application.
+These instructions will get you a copy of the project up and running on your local machine for development purposes. See [Run the Application](#Run-the-Application) for notes on how to run the application.
 
 ```
 ~ git clone https://github.com/VC8/gameoflife.git
