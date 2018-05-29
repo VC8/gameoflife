@@ -11,7 +11,7 @@ export default class Cell extends React.Component<IProps, any> {
         const { alive } = this.props.cell;
 
         return (
-            <div className="cell">{alive ? 1 : 0}</div>
+            <div className={alive ? "cell active" : "cell"}>{alive ? 1 : 0}</div>
         );
     }
 }
