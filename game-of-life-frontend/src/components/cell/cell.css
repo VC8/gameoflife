@@ -1,4 +1,10 @@
 .cell {
-    margin: 1em 2em;
+    padding: 1em 2em;
     float: left;
+    transition: background-color 0.35s, color 0.35s;
+}
+
+.active {
+    background-color: black;
+    color: white;
 }
