@@ -72,8 +72,7 @@ public class DecrementBoardCycleServiceTest {
     }
 
     private void givenBoardEventRepository() {
-        List<BoardEvent> boardEventList = Arrays.asList(boardEvent, mock(BoardEvent.class), mock(BoardEvent.class));
-        Stream<BoardEvent> stream = boardEventList.stream();
+        Stream<BoardEvent> stream = Stream.of(boardEvent, mock(BoardEvent.class), mock(BoardEvent.class));
         when(boardEventRepository.findAllByGenerationLessThan(eq(GENERATION), eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(stream);
     }
 
