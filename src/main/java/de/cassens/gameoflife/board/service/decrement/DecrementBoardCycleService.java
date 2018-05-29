@@ -1,36 +1,38 @@
 package de.cassens.gameoflife.board.service.decrement;
 
-import de.cassens.gameoflife.board.event.BoardEvent;
-import de.cassens.gameoflife.board.event.BoardEventFactory;
+import de.cassens.gameoflife.board.model.Board;
+import de.cassens.gameoflife.board.model.event.BoardEvent;
+import de.cassens.gameoflife.board.model.event.BoardEventFactory;
 import de.cassens.gameoflife.board.repository.BoardEventRepository;
+import de.cassens.gameoflife.board.service.state.BoardStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class DecrementBoardCycleService {
 
-    private BoardEventRepository boardEventRepository;
-    private BoardEventFactory boardEventFactory;
+    private final BoardEventRepository boardEventRepository;
+    private final BoardEventFactory boardEventFactory;
+    private final BoardStateService boardStateService;
 
     @Autowired
-    public DecrementBoardCycleService(BoardEventRepository boardEventRepository, BoardEventFactory boardEventFactory) {
+    public DecrementBoardCycleService(BoardEventRepository boardEventRepository, BoardEventFactory boardEventFactory, BoardStateService boardStateService) {
         this.boardEventRepository = boardEventRepository;
         this.boardEventFactory = boardEventFactory;
+        this.boardStateService = boardStateService;
     }
 
     public void decrementBoardCycle() {
-        List<BoardEvent> boardEvents = boardEventRepository.findAll(new Sort(Sort.Direction.DESC, "timestamp"));
+        Board state = boardStateService.getState();
+        int generation = state.getGeneration();
 
-        BoardEvent latestEvent = boardEvents.get(0);
-        if (latestEvent.getGeneration() == 0) throw new IllegalStateException("cannot decrement board cycle. board is at initial state");
+        Stream<BoardEvent> boardEventStream = boardEventRepository.findAllByGenerationLessThan(generation, new Sort(Sort.Direction.DESC, "timestamp"));
+        BoardEvent boardEvent = boardEventStream.limit(1).findFirst().orElseThrow(() -> new IllegalStateException("cannot decrement board cycle. board is at initial state"));
 
-        BoardEvent boardEvent = boardEvents.stream().filter(event -> latestEvent.getGeneration() > event.getGeneration()).findFirst().get();
         BoardEvent boardDecrementedEvent = boardEventFactory.createBoardDecrementedEvent(boardEvent);
         boardEventRepository.save(boardDecrementedEvent);
-
-        // TODO emit event / send message
     }
 }

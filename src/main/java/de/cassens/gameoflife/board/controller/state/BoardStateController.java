@@ -1,4 +1,4 @@
-package de.cassens.gameoflife.board.controller;
+package de.cassens.gameoflife.board.controller.state;
 
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.service.state.BoardStateService;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/gameoflife/board")
 public class BoardStateController {
 
-    private BoardStateService boardStateService;
+    private final BoardStateService boardStateService;
 
     public BoardStateController(BoardStateService boardStateService) {
         this.boardStateService = boardStateService;

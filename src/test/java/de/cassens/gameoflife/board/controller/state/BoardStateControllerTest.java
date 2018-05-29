@@ -1,5 +1,6 @@
-package de.cassens.gameoflife.board.controller;
+package de.cassens.gameoflife.board.controller.state;
 
+import de.cassens.gameoflife.board.controller.state.BoardStateController;
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.service.state.BoardStateService;
 import de.cassens.gameoflife.cell.model.Cell;

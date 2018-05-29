@@ -1,4 +1,4 @@
-package de.cassens.gameoflife.board.event;
+package de.cassens.gameoflife.board.model.event;
 
 import de.cassens.gameoflife.cell.model.Cell;
 import de.cassens.gameoflife.testUtil.TestBoardFactory;

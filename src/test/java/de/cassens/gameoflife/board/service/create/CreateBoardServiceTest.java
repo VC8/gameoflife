@@ -1,7 +1,7 @@
 package de.cassens.gameoflife.board.service.create;
 
-import de.cassens.gameoflife.board.event.BoardEvent;
-import de.cassens.gameoflife.board.event.BoardEventFactory;
+import de.cassens.gameoflife.board.model.event.BoardEvent;
+import de.cassens.gameoflife.board.model.event.BoardEventFactory;
 import de.cassens.gameoflife.board.repository.BoardEventRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

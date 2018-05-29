@@ -1,6 +1,6 @@
 package de.cassens.gameoflife.board.service.state;
 
-import de.cassens.gameoflife.board.event.BoardEvent;
+import de.cassens.gameoflife.board.model.event.BoardEvent;
 import de.cassens.gameoflife.board.model.Board;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
@@ -12,6 +12,7 @@ public class BoardStateService extends AbstractMongoEventListener<BoardEvent> {
     private Board state;
 
     public Board getState() {
+        if (this.state == null) throw new IllegalStateException("no board is created");
         return this.state;
     }
 

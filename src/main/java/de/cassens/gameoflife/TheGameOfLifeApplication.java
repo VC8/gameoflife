@@ -1,7 +1,7 @@
 package de.cassens.gameoflife;
 
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import com.mongodb.MongoClientOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,9 +21,8 @@ public class TheGameOfLifeApplication extends AbstractMongoConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        return new MongoClient(
-                new MongoClientURI("mongodb://" + mongoDbHost + "/data")
-        );
+        MongoClientOptions mongoClientOptions = MongoClientOptions.builder().socketTimeout(10000).build();
+        return new MongoClient(mongoDbHost, mongoClientOptions);
     }
 
     @Override

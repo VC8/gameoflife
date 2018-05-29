@@ -1,49 +1,46 @@
 package de.cassens.gameoflife.board.service.decrement;
 
-import de.cassens.gameoflife.board.event.BoardEvent;
-import de.cassens.gameoflife.board.event.BoardEventFactory;
+import de.cassens.gameoflife.board.model.Board;
+import de.cassens.gameoflife.board.model.event.BoardEvent;
+import de.cassens.gameoflife.board.model.event.BoardEventFactory;
 import de.cassens.gameoflife.board.repository.BoardEventRepository;
+import de.cassens.gameoflife.board.service.state.BoardStateService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class DecrementBoardCycleServiceTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    @InjectMocks
-    private DecrementBoardCycleService decrementBoardCycleService;
+    private static final int GENERATION = 5;
 
-    @Mock
-    private BoardEventRepository boardEventRepository;
-    @Mock
-    private BoardEventFactory boardEventFactory;
+    private final BoardEventRepository boardEventRepository = mock(BoardEventRepository.class);
+    private final BoardEventFactory boardEventFactory = mock(BoardEventFactory.class);
+    private final BoardStateService boardStateService = mock(BoardStateService.class);
+    private final BoardEvent boardEvent = mock(BoardEvent.class);
 
+    private DecrementBoardCycleService decrementBoardCycleService = new DecrementBoardCycleService(
+            boardEventRepository, boardEventFactory, boardStateService
+    );
+
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldDecrementBoardCycle() {
         // given
-        BoardEvent boardEvent = mock(BoardEvent.class);
-        when(boardEvent.getGeneration()).thenReturn(2);
-        BoardEvent latestBoardEvent = mock(BoardEvent.class);
-        when(latestBoardEvent.getGeneration()).thenReturn(3);
-        List<BoardEvent> boardEvents = Arrays.asList(latestBoardEvent, boardEvent, mock(BoardEvent.class), mock(BoardEvent.class));
-        when(boardEventRepository.findAll(eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(boardEvents);
-
-        BoardEvent boardDecrementedEvent = mock(BoardEvent.class);
-        when(boardEventFactory.createBoardDecrementedEvent(eq(boardEvent))).thenReturn(boardDecrementedEvent);
+        givenState();
+        givenBoardEventRepository();
+        BoardEvent boardDecrementedEvent = givenBoardEvent();
 
         // when
         decrementBoardCycleService.decrementBoardCycle();
@@ -52,11 +49,13 @@ public class DecrementBoardCycleServiceTest {
         verify(boardEventRepository).save(eq(boardDecrementedEvent));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldThrowIllegalStateExceptionWhenBoardCycleIsNeverIncremented() {
         // given
-        List<BoardEvent> boardEvents = Arrays.asList(mock(BoardEvent.class));
-        when(boardEventRepository.findAll(eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(boardEvents);
+        givenState();
+
+        when(boardEventRepository.findAllByGenerationLessThan(eq(GENERATION), eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(mock(Stream.class));
 
         // expect
         expectedException.expect(IllegalStateException.class);
@@ -64,5 +63,23 @@ public class DecrementBoardCycleServiceTest {
 
         // when
         decrementBoardCycleService.decrementBoardCycle();
+    }
+
+    private BoardEvent givenBoardEvent() {
+        BoardEvent boardDecrementedEvent = mock(BoardEvent.class);
+        when(boardEventFactory.createBoardDecrementedEvent(eq(boardEvent))).thenReturn(boardDecrementedEvent);
+        return boardDecrementedEvent;
+    }
+
+    private void givenBoardEventRepository() {
+        List<BoardEvent> boardEventList = Arrays.asList(boardEvent, mock(BoardEvent.class), mock(BoardEvent.class));
+        Stream<BoardEvent> stream = boardEventList.stream();
+        when(boardEventRepository.findAllByGenerationLessThan(eq(GENERATION), eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(stream);
+    }
+
+    private void givenState() {
+        Board board = mock(Board.class);
+        when(board.getGeneration()).thenReturn(GENERATION);
+        when(boardStateService.getState()).thenReturn(board);
     }
 }

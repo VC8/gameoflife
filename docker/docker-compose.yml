@@ -9,12 +9,15 @@ services:
     restart: always
   game_of_life:
     container_name: game_of_life
-    image: vcassens/gameoflife:1.0.1-SNAPSHOT
+    image: venancecassens/gameoflife
     ports:
       - "8080:8080"
-#  rabbitmq:
-#    container_name: rabbit-mq
-#    image: rabbitmq: 3
-#    ports:
-#      - "5672:5672"
-#    restart: always
+    depends_on:
+      - mongodb
+  game_of_life_web_ui:
+    container_name: game_of_life_web_ui
+    image: venancecassens/game-of-life-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - game_of_life

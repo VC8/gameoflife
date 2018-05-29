@@ -11,10 +11,4 @@ public class Board {
     Cell[][] cells;
     int generation;
 
-//    public void incrementCycle() {
-//        CellStateUpdater cellStateUpdater = new CellStateUpdater(this.cells);
-//        this.cells = cellStateUpdater.updateCellStates();
-//
-//        this.generation++;
-//    }
 }

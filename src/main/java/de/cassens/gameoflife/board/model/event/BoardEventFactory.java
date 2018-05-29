@@ -1,4 +1,4 @@
-package de.cassens.gameoflife.board.event;
+package de.cassens.gameoflife.board.model.event;
 
 import de.cassens.gameoflife.cell.model.Cell;
 import de.cassens.gameoflife.cell.model.CellFactory;
@@ -29,7 +29,7 @@ public class BoardEventFactory {
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                boolean isAlive = Math.random() > 0.49   ;
+                boolean isAlive = Math.random() > 0.6;
                 cells[row][col] = CellFactory.createCell(row, col, isAlive);
             }
         }

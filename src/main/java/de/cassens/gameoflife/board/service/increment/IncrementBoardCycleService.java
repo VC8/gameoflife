@@ -1,7 +1,7 @@
 package de.cassens.gameoflife.board.service.increment;
 
-import de.cassens.gameoflife.board.event.BoardEvent;
-import de.cassens.gameoflife.board.event.BoardEventFactory;
+import de.cassens.gameoflife.board.model.event.BoardEvent;
+import de.cassens.gameoflife.board.model.event.BoardEventFactory;
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.repository.BoardEventRepository;
 import de.cassens.gameoflife.board.service.state.BoardStateService;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class IncrementBoardCycleService {
 
-    private BoardStateService boardStateService;
-    private BoardEventFactory boardEventFactory;
-    private BoardEventRepository boardEventRepository;
+    private final BoardStateService boardStateService;
+    private final BoardEventFactory boardEventFactory;
+    private final BoardEventRepository boardEventRepository;
 
     @Autowired
     public IncrementBoardCycleService(BoardStateService boardStateService, BoardEventFactory boardEventFactory,
@@ -40,7 +40,5 @@ public class IncrementBoardCycleService {
 
         // save new event
         boardEventRepository.save(boardIncrementedEvent);
-
-        // TODO send event message
     }
 }

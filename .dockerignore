@@ -1,0 +1,9 @@
+.idea
+.mvn
+src
+.gitignore
+gameoflife.iml
+mvnw
+mvnw.cmd
+pom.xml
+game-of-life-frontend

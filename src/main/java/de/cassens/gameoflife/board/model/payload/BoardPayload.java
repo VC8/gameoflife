@@ -1,4 +1,4 @@
-package de.cassens.gameoflife.board.model;
+package de.cassens.gameoflife.board.model.payload;
 
 import lombok.Data;
 

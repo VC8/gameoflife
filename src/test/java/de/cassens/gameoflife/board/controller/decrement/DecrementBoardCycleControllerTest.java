@@ -1,5 +1,6 @@
-package de.cassens.gameoflife.board.controller;
+package de.cassens.gameoflife.board.controller.decrement;
 
+import de.cassens.gameoflife.board.controller.decrement.DecrementBoardCycleController;
 import de.cassens.gameoflife.board.service.decrement.DecrementBoardCycleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

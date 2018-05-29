@@ -1,4 +1,6 @@
 import Button from '@material-ui/core/Button';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import * as React from 'react';
 import GameBoard from '../../model/board/Board';
 import Cell from '../../model/cell/Cell';
@@ -32,7 +34,7 @@ class Board extends React.Component<{}, IState> {
             <div className="wrap">
                 <div className="create-board-section">
                     <Button variant="outlined" onClick={this.toggleCreateBoardForm}>
-                        {isCreateBoardFormVisible ? '-' : '+'}
+                        {isCreateBoardFormVisible ? <ArrowDropUp /> : <ArrowDropDown /> }
                     </Button>
                     <CreateBoardForm onSubmitted={this.onSubmitted} isVisible={isCreateBoardFormVisible} />
                 </div>

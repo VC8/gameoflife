@@ -1,7 +1,7 @@
 package de.cassens.gameoflife.board.service.increment;
 
-import de.cassens.gameoflife.board.event.BoardEvent;
-import de.cassens.gameoflife.board.event.BoardEventFactory;
+import de.cassens.gameoflife.board.model.event.BoardEvent;
+import de.cassens.gameoflife.board.model.event.BoardEventFactory;
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.repository.BoardEventRepository;
 import de.cassens.gameoflife.board.service.state.BoardStateService;

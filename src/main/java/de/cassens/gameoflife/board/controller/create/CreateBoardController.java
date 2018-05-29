@@ -1,6 +1,6 @@
-package de.cassens.gameoflife.board.controller;
+package de.cassens.gameoflife.board.controller.create;
 
-import de.cassens.gameoflife.board.model.BoardPayload;
+import de.cassens.gameoflife.board.model.payload.BoardPayload;
 import de.cassens.gameoflife.board.service.create.CreateBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/gameoflife/board")
 public class CreateBoardController {
 
-    private CreateBoardService createBoardService;
+    private final CreateBoardService createBoardService;
 
     @Autowired
     public CreateBoardController(CreateBoardService createBoardService) {

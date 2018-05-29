@@ -1,6 +1,6 @@
-package de.cassens.gameoflife.board.controller;
+package de.cassens.gameoflife.board.controller.increment;
 
-import de.cassens.gameoflife.board.service.decrement.DecrementBoardCycleService;
+import de.cassens.gameoflife.board.service.increment.IncrementBoardCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/gameoflife/board")
-public class DecrementBoardCycleController {
+public class IncrementBoardController {
 
-    private DecrementBoardCycleService decrementBoardCycleService;
+    private final IncrementBoardCycleService incrementBoardCycleService;
 
     @Autowired
-    public DecrementBoardCycleController(DecrementBoardCycleService decrementBoardCycleService) {
-        this.decrementBoardCycleService = decrementBoardCycleService;
+    public IncrementBoardController(IncrementBoardCycleService incrementBoardCycleService) {
+        this.incrementBoardCycleService = incrementBoardCycleService;
     }
 
     @CrossOrigin("http://localhost:3000")
-    @PostMapping("/decrement")
-    public ResponseEntity decrementBoardCycle() {
-        decrementBoardCycleService.decrementBoardCycle();
+    @PostMapping("/increment")
+    public ResponseEntity incrementBoardCycle() {
+        incrementBoardCycleService.incrementBoardCycle();
 
         return new ResponseEntity(HttpStatus.OK);
     }

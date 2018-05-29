@@ -1,7 +1,6 @@
 package de.cassens.gameoflife.board.controller.create;
 
-import de.cassens.gameoflife.board.controller.CreateBoardController;
-import de.cassens.gameoflife.board.model.BoardPayload;
+import de.cassens.gameoflife.board.model.payload.BoardPayload;
 import de.cassens.gameoflife.board.service.create.CreateBoardService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
