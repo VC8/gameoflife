@@ -1,5 +1,9 @@
+.container {
+    display: grid;
+}
+
 .board {
-    display: table;
+    /* display: table; */
     margin: 1em auto;
 }
 

@@ -10,9 +10,7 @@ interface IProps {
 export default class CellRow extends React.Component<IProps, any> {
     public render(): JSX.Element {
         return (
-            <div className="cellRow">
-                {this.renderCell()}
-            </div>
+            <> {this.renderCell()} </>
         );
     }
 

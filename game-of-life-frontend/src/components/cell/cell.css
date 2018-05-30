@@ -1,5 +1,5 @@
 .cell {
-    padding: 1em 2em;
+    padding: 1em 0;
     float: left;
     transition: background-color 0.35s, color 0.35s;
 }

@@ -27,28 +27,32 @@ class Board extends React.Component<{}, IState> {
     }
 
     public render(): JSX.Element {
-        const { isCreateBoardFormVisible, generation } = this.state;
-        const isBoardVisible = this.state.board.getCells().length > 1;
+        const { isCreateBoardFormVisible, generation, board } = this.state;
+        const rowSize = board.getCells().length;
+        const isBoardVisible = rowSize > 1;
+
+        const style = {
+            gridTemplateColumns: "repeat(" + rowSize + ", auto)"
+        };
 
         return (
             <div className="wrap">
                 <div className="create-board-section">
                     <Button variant="outlined" onClick={this.toggleCreateBoardForm}>
-                        {isCreateBoardFormVisible ? <ArrowDropUp /> : <ArrowDropDown /> }
+                        {isCreateBoardFormVisible ? <ArrowDropUp /> : <ArrowDropDown />}
                     </Button>
                     <CreateBoardForm onSubmitted={this.onSubmitted} isVisible={isCreateBoardFormVisible} />
                 </div>
                 <p className={isBoardVisible ? 'generation-section' : 'hide'} >Generation: {generation}</p>
-                <div className="board">
-                    {this.renderCellRows()}
+                <div className="board container" style={style}>
+                    {this.renderCellRows(board)}
                 </div>
                 <CycleActions isVisible={!isCreateBoardFormVisible && isBoardVisible} onCycleActionCompleted={this.updateState} />
             </div>
         );
     }
 
-    private renderCellRows(): JSX.Element[] {
-        const { board } = this.state;
+    private renderCellRows(board: GameBoard): JSX.Element[] {
         const cells = board.getCells();
 
         return cells.map((row: Cell[], index: number) => {
