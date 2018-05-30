@@ -9,14 +9,14 @@ services:
     restart: always
   game_of_life:
     container_name: game_of_life
-    image: venancecassens/gameoflife
+    image: venancecassens/gameoflife:1.0.1
     ports:
       - "8080:8080"
     depends_on:
       - mongodb
   game_of_life_web_ui:
     container_name: game_of_life_web_ui
-    image: venancecassens/game-of-life-frontend
+    image: venancecassens/game-of-life-frontend:1.0.1
     ports:
       - "3000:3000"
     depends_on:
