@@ -25,6 +25,5 @@ public class MessageSenderTest {
 
         // then
         assertThat(messageSend, is(notNullValue()));
-        assertThat(subscribe.isDisposed(), is(true));
     }
 }

@@ -19,6 +19,7 @@ public class MessageSender {
         return Observable.create(
                 source -> {
                     try (final Connection connection = createConnection()) {
+                        // TODO channel service
                         try (final Channel channel = connection.createChannel()) {
                             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
                             String message = "Hello Board";
