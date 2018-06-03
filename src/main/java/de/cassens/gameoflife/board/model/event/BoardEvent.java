@@ -14,11 +14,9 @@ import java.util.UUID;
 @NonFinal
 @Document(collection = "board_events")
 public class BoardEvent implements Serializable {
-    @Id
-    UUID eventId;
+    @Id UUID eventId;
     Date timestamp;
-    String eventName;
+    BoardEventType boardEventType;
     int generation;
     Cell[][] cells;
-
 }

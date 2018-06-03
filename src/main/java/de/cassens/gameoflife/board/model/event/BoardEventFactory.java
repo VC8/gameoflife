@@ -10,18 +10,18 @@ import java.util.UUID;
 @Component
 public class BoardEventFactory {
 
-    private static final String BOARD_CREATED = "BOARD_CREATED";
-    private static final String BOARD_INCREMENTED = "BOARD_INCREMENTED";
-    private static final String BOARD_DECREMENTED = "BOARD_DECREMENTED";
-
     public BoardEvent createBoardCreatedEvent(int rows, int cols) {
         Cell[][] cells = createCells(rows, cols);
 
-        return new BoardEvent(UUID.randomUUID(), new Date(), BOARD_CREATED, 0, cells);
+        return new BoardEvent(UUID.randomUUID(), new Date(), BoardEventType.CREATED, 0, cells);
     }
 
     public BoardEvent createBoardIncrementedEvent(int generation, Cell[][] cells) {
-        return new BoardEvent(UUID.randomUUID(), new Date(), BOARD_INCREMENTED, generation, cells);
+        return new BoardEvent(UUID.randomUUID(), new Date(), BoardEventType.INCREMENTED, generation, cells);
+    }
+
+    public BoardEvent createBoardDecrementedEvent(BoardEvent boardEvent) {
+        return new BoardEvent(UUID.randomUUID(), new Date(), BoardEventType.DECREMENTED, boardEvent.getGeneration(), boardEvent.getCells());
     }
 
     private Cell[][] createCells(int rows, int cols) {
@@ -35,9 +35,5 @@ public class BoardEventFactory {
         }
 
         return cells;
-    }
-
-    public BoardEvent createBoardDecrementedEvent(BoardEvent boardEvent) {
-        return new BoardEvent(UUID.randomUUID(), new Date(), BOARD_DECREMENTED, boardEvent.getGeneration(), boardEvent.getCells());
     }
 }

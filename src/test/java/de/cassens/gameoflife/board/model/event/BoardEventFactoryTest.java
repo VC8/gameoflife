@@ -27,7 +27,7 @@ public class BoardEventFactoryTest {
 
         // then
         assertThat(createBoardEvent, instanceOf(BoardEvent.class));
-        assertThat(createBoardEvent.getEventName(), is("BOARD_CREATED"));
+        assertThat(createBoardEvent.getBoardEventType(), is(BoardEventType.CREATED));
         assertThat(createBoardEvent.getTimestamp(), instanceOf(Date.class));
         assertThat(createBoardEvent.getEventId(), instanceOf(UUID.class));
         assertThat(createBoardEvent.getGeneration(), is(0));
@@ -47,7 +47,7 @@ public class BoardEventFactoryTest {
 
         // then
         assertThat(boardIncrementedEvent, instanceOf(BoardEvent.class));
-        assertThat(boardIncrementedEvent.getEventName(), is("BOARD_INCREMENTED"));
+        assertThat(boardIncrementedEvent.getBoardEventType(), is(BoardEventType.INCREMENTED));
         assertThat(boardIncrementedEvent.getTimestamp(), instanceOf(Date.class));
         assertThat(boardIncrementedEvent.getEventId(), instanceOf(UUID.class));
         assertThat(boardIncrementedEvent.getGeneration(), is(1));
@@ -67,7 +67,7 @@ public class BoardEventFactoryTest {
 
         // then
         assertThat(boardDecrementedEvent, instanceOf(BoardEvent.class));
-        assertThat(boardDecrementedEvent.getEventName(), is("BOARD_DECREMENTED"));
+        assertThat(boardDecrementedEvent.getBoardEventType(), is(BoardEventType.DECREMENTED));
         assertThat(boardDecrementedEvent.getTimestamp(), instanceOf(Date.class));
         assertThat(boardDecrementedEvent.getEventId(), instanceOf(UUID.class));
         assertThat(boardDecrementedEvent.getGeneration(), is(3));
