@@ -1,0 +1,1 @@
+{"messageType":"DOCUMENT","payload":{"cells":[[{"row":0,"col":0,"alive":true},{"row":0,"col":1,"alive":true},{"row":0,"col":2,"alive":false}],[{"row":1,"col":0,"alive":false},{"row":1,"col":1,"alive":false},{"row":1,"col":2,"alive":true}],[{"row":2,"col":0,"alive":false},{"row":2,"col":1,"alive":false},{"row":2,"col":2,"alive":true}]],"generation":2}}

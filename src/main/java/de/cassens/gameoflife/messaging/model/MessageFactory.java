@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MessageFactory {
-    public Message<ActionType> createCommandMessage(ActionType actionType) {
-        return new Message<>(MessageType.COMMAND, actionType);
+    public Message<CommandType> createCommandMessage(CommandType commandType) {
+        return new Message<>(MessageType.COMMAND, commandType);
     }
 
     public Message<EventType> createEventMessage(EventType eventType) {

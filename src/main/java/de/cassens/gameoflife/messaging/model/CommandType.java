@@ -1,5 +1,5 @@
 package de.cassens.gameoflife.messaging.model;
 
-public enum ActionType {
+public enum CommandType {
     CREATE, INCREMENT, DECREMENT
 }

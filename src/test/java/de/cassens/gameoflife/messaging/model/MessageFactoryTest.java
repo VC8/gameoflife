@@ -16,14 +16,14 @@ public class MessageFactoryTest {
     @Test
     public void shouldCreateCommandMessage() {
         // given
-        final ActionType actionType = ActionType.CREATE;
+        final CommandType commandType = CommandType.CREATE;
 
         // when
-        Message<ActionType> message = messageFactory.createCommandMessage(actionType);
+        Message<CommandType> message = messageFactory.createCommandMessage(commandType);
 
         // then
         assertThat(message.getMessageType(), is(MessageType.COMMAND));
-        assertThat(message.getPayload(), is(ActionType.CREATE));
+        assertThat(message.getPayload(), is(CommandType.CREATE));
     }
 
     @Test
