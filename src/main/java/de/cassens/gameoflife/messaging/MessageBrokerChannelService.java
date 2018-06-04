@@ -9,7 +9,6 @@ import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-// TODO test
 @Service
 public class MessageBrokerChannelService {
 
