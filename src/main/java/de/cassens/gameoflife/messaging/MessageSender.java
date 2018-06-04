@@ -32,4 +32,9 @@ public class MessageSender {
                 }
         ).ignoreElements();
     }
+
+    // TODO send created event message
+    // TODO send incremented event message
+    // TODO send decremented event message
+    // TODO send state document message
 }
