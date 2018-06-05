@@ -64,7 +64,7 @@ public class MessageConverter {
                     throw new IOException();
             }
 
-        } catch (JSONException | IOException ex) {
+        } catch (Exception ex) {
             throw new IllegalStateException("mapping failed", ex);
         }
     }
