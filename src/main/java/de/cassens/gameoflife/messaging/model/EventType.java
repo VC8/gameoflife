@@ -1,5 +1,17 @@
 package de.cassens.gameoflife.messaging.model;
 
 public enum  EventType {
-    CREATED, INCREMENTED, DECREMENTED
+    CREATED("CREATED"),
+    INCREMENTED("INCREMENTED"),
+    DECREMENTED("DECREMENTED");
+
+    private final String type;
+
+    EventType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
 }

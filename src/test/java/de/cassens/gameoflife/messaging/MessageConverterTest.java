@@ -4,7 +4,9 @@ import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.cell.model.Cell;
 import de.cassens.gameoflife.messaging.model.*;
 import de.cassens.gameoflife.testUtil.TestBoardFactory;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +19,11 @@ import static org.hamcrest.core.Is.is;
 
 public class MessageConverterTest {
 
-    private final MessageConverter messageConverter = new MessageConverter();
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    private final MessageFactory messageFactory = new MessageFactory();
+    private final MessageConverter messageConverter = new MessageConverter(messageFactory);
 
     @Test
     public void shouldConvertMessageObjectToJsonString() throws IOException {
@@ -28,11 +34,9 @@ public class MessageConverterTest {
         String jsonMessage = messageConverter.convertToJsonString(documentMessage);
 
         // then
-        final String expectedJson = getJson("message.json");
+        final String expectedJson = getJson("document-message.json");
         assertThat(jsonMessage, is(expectedJson));
     }
-
-    // TODO exception testing message to json
 
     @SuppressWarnings("unchecked")
     @Test
@@ -66,7 +70,7 @@ public class MessageConverterTest {
     @Test
     public void shouldConvertJsonStringToDocumentMessage() throws IOException {
         // given
-        String documentMessageJson = getJson("message.json");
+        String documentMessageJson = getJson("document-message.json");
         final Cell[][] cells = TestBoardFactory.createBoard();
         final Board expected = new Board(cells, 2);
 
@@ -81,7 +85,18 @@ public class MessageConverterTest {
         assertThat(actual.getCells(), is(expected.getCells()));
     }
 
-    // TODO exception testing json to message
+    @Test
+    public void shouldThrowIllegalStateExceptionWhenConversionToMessageFailed() throws IOException {
+        // given
+        String json = getJson("wrong-message.json");
+
+        // expected
+        expectedException.expect(IllegalStateException.class);
+        expectedException.expectMessage("mapping failed");
+
+        // when
+        messageConverter.convertToMessage(json);
+    }
 
     private Message<Board> givenDocumentMessage() {
         final Cell[][] cells = TestBoardFactory.createBoard();
