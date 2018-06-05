@@ -33,9 +33,9 @@ public class MessageConverter {
         this.messageFactory = messageFactory;
     }
 
-    public String convertToJsonString(Message documentMessage) {
+    public String convertToJsonString(Message message) {
         try {
-            return objectMapper.writeValueAsString(documentMessage);
+            return objectMapper.writeValueAsString(message);
         } catch (JsonProcessingException ex) {
             throw new IllegalStateException("mapping failed", ex);
         }

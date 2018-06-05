@@ -1,6 +1,7 @@
 package de.cassens.gameoflife.messaging;
 
 import com.rabbitmq.client.Channel;
+import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.messaging.model.EventType;
 import de.cassens.gameoflife.messaging.model.Message;
 import de.cassens.gameoflife.messaging.model.MessageFactory;
@@ -24,8 +25,8 @@ public class MessageSender {
         this.messageConverter = messageConverter;
     }
 
-    public void sendCreatedEventMessage() throws IOException {
-        final Message<EventType> eventMessage = messageFactory.createEventMessage(EventType.CREATED);
+    public void sendEventMessage(EventType eventType) throws IOException {
+        final Message<EventType> eventMessage = messageFactory.createEventMessage(eventType);
         final String eventMessageJson = messageConverter.convertToJsonString(eventMessage);
 
         final Channel channel = messageBrokerChannelService.getChannel();
@@ -35,7 +36,14 @@ public class MessageSender {
         System.out.println("Sent '" + eventMessageJson + "'");
     }
 
-    public void sendIncrementedEventMessage() {
+    public void sendDocumentMessage(Board board) throws IOException {
+        final Message<Board> documentMessage = messageFactory.createDocumentMessage(board);
+        final String documentMessageJson = messageConverter.convertToJsonString(documentMessage);
 
+        final Channel channel = messageBrokerChannelService.getChannel();
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        channel.basicPublish("", QUEUE_NAME, null, documentMessageJson.getBytes());
+
+        System.out.println("Sent '" + documentMessageJson + "'");
     }
 }
