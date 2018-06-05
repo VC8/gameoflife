@@ -18,10 +18,13 @@ import java.util.List;
 @Component
 public class MessageConverter {
 
-    private static final String MESSAGE_TYPE = "messageType";
-    private static final String PAYLOAD = "payload";
-    private static final String GENERATION = "generation";
-    private static final String CELLS = "cells";
+    private static final String MESSAGE_TYPE_KEY = "messageType";
+    private static final String PAYLOAD_KEY = "payload";
+    private static final String GENERATION_KEY = "generation";
+    private static final String CELLS_KEY = "cells";
+    private static final String ROW_KEY = "row";
+    private static final String COL_KEY = "col";
+    private static final String IS_ALIVE_KEY = "alive";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final MessageFactory messageFactory;
@@ -38,22 +41,21 @@ public class MessageConverter {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public Message convertToMessage(String messageJson) {
         try {
             final JSONObject message = new JSONObject(messageJson);
-            final MessageType messageType = MessageType.valueOf(message.getString(MESSAGE_TYPE));
+            final MessageType messageType = MessageType.valueOf(message.getString(MESSAGE_TYPE_KEY));
 
             switch (messageType) {
                 case EVENT:
-                    final EventType eventType = EventType.valueOf(message.getString(PAYLOAD));
+                    final EventType eventType = EventType.valueOf(message.getString(PAYLOAD_KEY));
                     return messageFactory.createEventMessage(eventType);
                 case COMMAND:
-                    final CommandType commandType = CommandType.valueOf(message.getString(PAYLOAD));
+                    final CommandType commandType = CommandType.valueOf(message.getString(PAYLOAD_KEY));
                     return messageFactory.createCommandMessage(commandType);
                 case DOCUMENT:
-                    final JSONObject payload = message.getJSONObject(PAYLOAD);
-                    final int generation = payload.getInt(GENERATION);
+                    final JSONObject payload = message.getJSONObject(PAYLOAD_KEY);
+                    final int generation = payload.getInt(GENERATION_KEY);
                     final Cell[][] cells = convertPayloadToCells(payload);
                     final Board board = new Board(cells, generation);
                     return messageFactory.createDocumentMessage(board);
@@ -67,7 +69,7 @@ public class MessageConverter {
     }
 
     private Cell[][] convertPayloadToCells(JSONObject payload) throws JSONException {
-        final JSONArray cellsJson = payload.getJSONArray(CELLS);
+        final JSONArray cellsJson = payload.getJSONArray(CELLS_KEY);
 
         final List<Cell[]> cellList = new ArrayList<>();
         for (int i = 0; i < cellsJson.length(); i++) {
@@ -76,10 +78,10 @@ public class MessageConverter {
 
             for (int j = 0; j < cellRowJson.length(); j++) {
                 final JSONObject cellJson = cellRowJson.getJSONObject(j);
-                final int row = cellJson.getInt("row");
-                final int col = cellJson.getInt("col");
-                final boolean alive = cellJson.getBoolean("alive");
-                final Cell cell = CellFactory.createCell(row, col, alive);
+                final int row = cellJson.getInt(ROW_KEY);
+                final int col = cellJson.getInt(COL_KEY);
+                final boolean isAlive = cellJson.getBoolean(IS_ALIVE_KEY);
+                final Cell cell = CellFactory.createCell(row, col, isAlive);
                 rowList.add(cell);
             }
 
