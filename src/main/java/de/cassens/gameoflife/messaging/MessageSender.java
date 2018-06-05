@@ -1,40 +1,41 @@
 package de.cassens.gameoflife.messaging;
 
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
+import de.cassens.gameoflife.messaging.model.EventType;
+import de.cassens.gameoflife.messaging.model.Message;
+import de.cassens.gameoflife.messaging.model.MessageFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 @Component
 public class MessageSender {
 
-    private final static String QUEUE_NAME = "BOARD_EVENTS";
+    private static final String QUEUE_NAME = "BOARD_EVENTS";
     private final MessageBrokerChannelService messageBrokerChannelService;
+    private final MessageFactory messageFactory;
+    private final MessageConverter messageConverter;
 
-    public MessageSender(MessageBrokerChannelService messageBrokerChannelService) {
+    public MessageSender(MessageBrokerChannelService messageBrokerChannelService,
+                         MessageFactory messageFactory,
+                         MessageConverter messageConverter) {
         this.messageBrokerChannelService = messageBrokerChannelService;
+        this.messageFactory = messageFactory;
+        this.messageConverter = messageConverter;
     }
 
-    public Completable sendMessage() {
-        return Observable.create(
-                source -> {
-                    final Channel channel = messageBrokerChannelService.getChannel();
+    public void sendCreatedEventMessage() throws IOException {
+        final Message<EventType> eventMessage = messageFactory.createEventMessage(EventType.CREATED);
+        final String eventMessageJson = messageConverter.convertToJsonString(eventMessage);
 
-                    channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-                    String message = "Hello Board";
-                    channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-                    System.out.println("[x] Sent '" + message + "'");
-                }
-        ).ignoreElements();
+        final Channel channel = messageBrokerChannelService.getChannel();
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        channel.basicPublish("", QUEUE_NAME, null, eventMessageJson.getBytes());
+
+        System.out.println("Sent '" + eventMessageJson + "'");
     }
 
-    // TODO send created event message
-    // TODO send incremented event message
-    // TODO send decremented event message
-    // TODO send state document message
+    public void sendIncrementedEventMessage() {
+
+    }
 }
