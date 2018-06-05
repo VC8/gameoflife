@@ -29,21 +29,27 @@ public class MessageSender {
         final Message<EventType> eventMessage = messageFactory.createEventMessage(eventType);
         final String eventMessageJson = messageConverter.convertToJsonString(eventMessage);
 
-        final Channel channel = messageBrokerChannelService.getChannel();
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        channel.basicPublish("", QUEUE_NAME, null, eventMessageJson.getBytes());
+        publishMessage(eventMessageJson);
 
-        System.out.println("Sent '" + eventMessageJson + "'");
+        logMessage(eventMessageJson);
     }
 
     public void sendDocumentMessage(Board board) throws IOException {
         final Message<Board> documentMessage = messageFactory.createDocumentMessage(board);
         final String documentMessageJson = messageConverter.convertToJsonString(documentMessage);
 
+        publishMessage(documentMessageJson);
+
+        logMessage(documentMessageJson);
+    }
+
+    private void publishMessage(String messageJson) throws IOException {
         final Channel channel = messageBrokerChannelService.getChannel();
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        channel.basicPublish("", QUEUE_NAME, null, documentMessageJson.getBytes());
+        channel.basicPublish("", QUEUE_NAME, null, messageJson.getBytes());
+    }
 
-        System.out.println("Sent '" + documentMessageJson + "'");
+    private void logMessage(String messageJson) {
+        System.out.println("Sent '" + messageJson + "'");
     }
 }
