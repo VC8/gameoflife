@@ -56,7 +56,8 @@ public class MessageConverter {
                 case DOCUMENT:
                     final JSONObject payload = message.getJSONObject(PAYLOAD_KEY);
                     final int generation = payload.getInt(GENERATION_KEY);
-                    final Cell[][] cells = convertPayloadToCells(payload);
+                    final JSONArray cellsJson = payload.getJSONArray(CELLS_KEY);
+                    final Cell[][] cells = convertCellsJsonToCells(cellsJson);
                     final Board board = new Board(cells, generation);
                     return messageFactory.createDocumentMessage(board);
                 default:
@@ -68,9 +69,7 @@ public class MessageConverter {
         }
     }
 
-    private Cell[][] convertPayloadToCells(JSONObject payload) throws JSONException {
-        final JSONArray cellsJson = payload.getJSONArray(CELLS_KEY);
-
+    private Cell[][] convertCellsJsonToCells(JSONArray cellsJson) throws JSONException {
         final List<Cell[]> cellList = new ArrayList<>();
         for (int i = 0; i < cellsJson.length(); i++) {
             final List<Cell> rowList = new ArrayList<>();
