@@ -1,4 +1,4 @@
-package de.cassens.gameoflife.messaging;
+package de.cassens.gameoflife.messaging.config;
 
 import com.rabbitmq.client.ConnectionFactory;
 
