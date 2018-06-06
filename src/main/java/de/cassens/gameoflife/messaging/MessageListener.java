@@ -2,32 +2,29 @@ package de.cassens.gameoflife.messaging;
 
 import com.rabbitmq.client.*;
 import de.cassens.gameoflife.messaging.config.Queues;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static java.text.MessageFormat.*;
+
 @Component
-public class MessageListener {
+public class MessageListener extends DefaultConsumer {
 
-    private final Consumer consumer;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageListener.class);
 
-    public MessageListener(MessageBrokerChannelService messageBrokerChannelService) throws IOException {
-        final Channel channel = messageBrokerChannelService.getChannel();
-        this.consumer = new Consumer(channel);
-        channel.basicConsume(Queues.BOARD_EVENTS.getQueueName(), this.consumer);
+    public MessageListener(Channel channel) throws IOException {
+        super(channel);
+        channel.basicConsume(Queues.BOARD_EVENTS.getQueueName(), this);
     }
 
-    private final class Consumer extends DefaultConsumer {
-
-        public Consumer(Channel channel) {
-            super(channel);
-        }
-
-        @Override
-        public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
-                throws IOException {
-            String message = new String(body, "UTF-8");
-            System.out.println(" [x] Received '" + message + "'");
-        }
+    @Override
+    public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
+            throws IOException {
+        String message = new String(body, "UTF-8");
+        final String logMessage = format("Received ''{0}''", message);
+        LOGGER.info(logMessage);
     }
 }
