@@ -2,6 +2,10 @@ package de.cassens.gameoflife.messaging.model;
 
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.cell.model.Cell;
+import de.cassens.gameoflife.messaging.model.message.*;
+import de.cassens.gameoflife.messaging.model.type.CommandType;
+import de.cassens.gameoflife.messaging.model.type.EventType;
+import de.cassens.gameoflife.messaging.model.type.MessageType;
 import de.cassens.gameoflife.testUtil.TestBoardFactory;
 import org.junit.Test;
 
@@ -19,11 +23,11 @@ public class MessageFactoryTest {
         final CommandType commandType = CommandType.CREATE;
 
         // when
-        Message<CommandType> message = messageFactory.createCommandMessage(commandType);
+        final CommandMessage commandMessage = messageFactory.createCommandMessage(commandType);
 
         // then
-        assertThat(message.getMessageType(), is(MessageType.COMMAND));
-        assertThat(message.getPayload(), is(CommandType.CREATE));
+        assertThat(commandMessage.getMessageType(), is(MessageType.COMMAND));
+        assertThat(commandMessage.getCommandType(), is(CommandType.CREATE));
     }
 
     @Test
@@ -32,11 +36,11 @@ public class MessageFactoryTest {
         final EventType eventType = EventType.INCREMENTED;
 
         // when
-        Message<EventType> message = messageFactory.createEventMessage(eventType);
+        final EventMessage eventMessage = messageFactory.createEventMessage(eventType);
 
         // then
-        assertThat(message.getMessageType(), is(MessageType.EVENT));
-        assertThat(message.getPayload(), is(EventType.INCREMENTED));
+        assertThat(eventMessage.getMessageType(), is(MessageType.EVENT));
+        assertThat(eventMessage.getEventType(), is(EventType.INCREMENTED));
     }
 
     @Test
@@ -46,10 +50,10 @@ public class MessageFactoryTest {
         final Board board = new Board(cells, 2);
 
         // when
-        Message<Board> message = messageFactory.createDocumentMessage(board);
+        final DocumentMessage<Board> documentMessage = messageFactory.createDocumentMessage(board);
 
         // then
-        assertThat(message.getMessageType(), is(MessageType.DOCUMENT));
-        assertThat(message.getPayload(), is(board));
+        assertThat(documentMessage.getMessageType(), is(MessageType.DOCUMENT));
+        assertThat(documentMessage.getPayload(), is(board));
     }
 }

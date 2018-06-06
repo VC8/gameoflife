@@ -1,11 +1,7 @@
 package de.cassens.gameoflife.messaging;
 
 import com.rabbitmq.client.Channel;
-import de.cassens.gameoflife.messaging.model.EventType;
-import de.cassens.gameoflife.messaging.model.Message;
-import de.cassens.gameoflife.messaging.model.MessageFactory;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.nio.file.Files;

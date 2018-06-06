@@ -1,4 +1,4 @@
-package de.cassens.gameoflife.messaging.model;
+package de.cassens.gameoflife.messaging.model.type;
 
 public enum CommandType {
     CREATE("CREATE"),
