@@ -2,6 +2,7 @@ package de.cassens.gameoflife.messaging;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
+import de.cassens.gameoflife.messaging.config.Queues;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -23,6 +24,7 @@ public class MessageBrokerChannelService {
     public void init() throws IOException {
         final Connection connection = messageBrokerConnectionService.getConnection();
         this.channel = connection.createChannel();
+        this.channel.queueDeclare(Queues.BOARD_EVENTS.getQueueName(), false, false, false, null);
     }
 
     @PreDestroy

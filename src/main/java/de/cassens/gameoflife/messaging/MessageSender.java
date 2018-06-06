@@ -2,6 +2,7 @@ package de.cassens.gameoflife.messaging;
 
 import com.rabbitmq.client.Channel;
 import de.cassens.gameoflife.board.model.Board;
+import de.cassens.gameoflife.messaging.config.Queues;
 import de.cassens.gameoflife.messaging.model.EventType;
 import de.cassens.gameoflife.messaging.model.Message;
 import de.cassens.gameoflife.messaging.model.MessageFactory;
@@ -12,7 +13,6 @@ import java.io.IOException;
 @Component
 public class MessageSender {
 
-    private static final String QUEUE_NAME = "BOARD_EVENTS";
     private final MessageBrokerChannelService messageBrokerChannelService;
     private final MessageFactory messageFactory;
     private final MessageConverter messageConverter;
@@ -45,8 +45,7 @@ public class MessageSender {
 
     private void publishMessage(String messageJson) throws IOException {
         final Channel channel = messageBrokerChannelService.getChannel();
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        channel.basicPublish("", QUEUE_NAME, null, messageJson.getBytes());
+        channel.basicPublish("", Queues.BOARD_EVENTS.getQueueName(), null, messageJson.getBytes());
     }
 
     private void logMessage(String messageJson) {
