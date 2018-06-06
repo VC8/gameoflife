@@ -25,7 +25,7 @@ public class MessageSender {
         this.messageConverter = messageConverter;
     }
 
-    public void sendEventMessage(EventType eventType) throws IOException {
+    public final void sendEventMessage(EventType eventType) throws IOException {
         final Message<EventType> eventMessage = messageFactory.createEventMessage(eventType);
         final String eventMessageJson = messageConverter.convertToJsonString(eventMessage);
 
@@ -34,7 +34,7 @@ public class MessageSender {
         logMessage(eventMessageJson);
     }
 
-    public void sendDocumentMessage(Board board) throws IOException {
+    public final void sendDocumentMessage(Board board) throws IOException {
         final Message<Board> documentMessage = messageFactory.createDocumentMessage(board);
         final String documentMessageJson = messageConverter.convertToJsonString(documentMessage);
 
