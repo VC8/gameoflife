@@ -13,14 +13,14 @@ import java.io.IOException;
 @Component
 public class MessageSender {
 
-    private final MessageBrokerChannelService messageBrokerChannelService;
+    private final Channel channel;
     private final MessageFactory messageFactory;
     private final MessageConverter messageConverter;
 
-    public MessageSender(MessageBrokerChannelService messageBrokerChannelService,
+    public MessageSender(Channel channel,
                          MessageFactory messageFactory,
                          MessageConverter messageConverter) {
-        this.messageBrokerChannelService = messageBrokerChannelService;
+        this.channel = channel;
         this.messageFactory = messageFactory;
         this.messageConverter = messageConverter;
     }
@@ -44,8 +44,7 @@ public class MessageSender {
     }
 
     private void publishMessage(String messageJson) throws IOException {
-        final Channel channel = messageBrokerChannelService.getChannel();
-        channel.basicPublish("", Queues.BOARD_EVENTS.getQueueName(), null, messageJson.getBytes());
+        this.channel.basicPublish("", Queues.BOARD_EVENTS.getQueueName(), null, messageJson.getBytes());
     }
 
     private void logMessage(String messageJson) {

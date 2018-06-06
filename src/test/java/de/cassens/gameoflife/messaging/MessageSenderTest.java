@@ -29,16 +29,15 @@ import static org.mockito.Mockito.when;
 
 public class MessageSenderTest {
 
-    private final MessageBrokerChannelService messageBrokerChannelService = mock(MessageBrokerChannelService.class);
+    private final Channel channel = mock(Channel.class);
     private final MessageFactory messageFactory = mock(MessageFactory.class);
     private final MessageConverter messageConverter = mock(MessageConverter.class);
-    private final MessageSender messageSender = new MessageSender(messageBrokerChannelService, messageFactory, messageConverter);
+    private final MessageSender messageSender = new MessageSender(channel, messageFactory, messageConverter);
 
     @SuppressWarnings("unchecked")
     @Test
     public void shouldSendCreatedEventMessage() throws IOException {
         // given
-        final Channel channel = givenChannel();
         final Message message = mock(Message.class);
         when(messageFactory.createEventMessage(EventType.CREATED)).thenReturn(message);
         final String eventJson = "{\"messageType\":\"EVENT\",\"payload\":\"CREATED\"}";
@@ -48,7 +47,6 @@ public class MessageSenderTest {
         messageSender.sendEventMessage(EventType.CREATED);
 
         // then
-        verify(channel).queueDeclare("BOARD_EVENTS", false, false, false, null);
         verify(channel).basicPublish("", "BOARD_EVENTS", null, eventJson.getBytes());
     }
 
@@ -56,7 +54,6 @@ public class MessageSenderTest {
     @Test
     public void shouldSendIncrementedEventMessage() throws IOException {
         // given
-        final Channel channel = givenChannel();
         final Message message = mock(Message.class);
         when(messageFactory.createEventMessage(EventType.INCREMENTED)).thenReturn(message);
         final String eventJson = "{\"messageType\":\"EVENT\",\"payload\":\"INCREMENTED\"}";
@@ -66,7 +63,6 @@ public class MessageSenderTest {
         messageSender.sendEventMessage(EventType.INCREMENTED);
 
         // then
-        verify(channel).queueDeclare("BOARD_EVENTS", false, false, false, null);
         verify(channel).basicPublish("", "BOARD_EVENTS", null, eventJson.getBytes());
     }
 
@@ -74,7 +70,6 @@ public class MessageSenderTest {
     @Test
     public void shouldSendDecrementedEventMessage() throws IOException {
         // given
-        final Channel channel = givenChannel();
         final Message message = mock(Message.class);
         when(messageFactory.createEventMessage(EventType.DECREMENTED)).thenReturn(message);
         final String eventJson = "{\"messageType\":\"EVENT\",\"payload\":\"DECREMENTED\"}";
@@ -84,7 +79,6 @@ public class MessageSenderTest {
         messageSender.sendEventMessage(EventType.DECREMENTED);
 
         // then
-        verify(channel).queueDeclare("BOARD_EVENTS", false, false, false, null);
         verify(channel).basicPublish("", "BOARD_EVENTS", null, eventJson.getBytes());
     }
 
@@ -92,7 +86,6 @@ public class MessageSenderTest {
     @Test
     public void shouldSendBoardStateMessage() throws IOException {
         // given
-        final Channel channel = givenChannel();
         final Cell[][] cells = TestBoardFactory.createBoard();
         final Board board = new Board(cells, 2);
         final Message message = mock(Message.class);
@@ -104,14 +97,7 @@ public class MessageSenderTest {
         messageSender.sendDocumentMessage(board);
 
         // then
-        verify(channel).queueDeclare("BOARD_EVENTS", false, false, false, null);
         verify(channel).basicPublish("", "BOARD_EVENTS", null, documentJson.getBytes());
-    }
-
-    private Channel givenChannel() {
-        final Channel channel = mock(Channel.class);
-        when(messageBrokerChannelService.getChannel()).thenReturn(channel);
-        return channel;
     }
 
     private String getJson(String file) throws IOException {
