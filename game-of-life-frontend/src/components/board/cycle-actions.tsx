@@ -29,7 +29,7 @@ export default class CycleActions extends React.Component<IProps, {}> {
     }
 
     private incrementCycle = () => {
-        const request = new Request('http://localhost:8080/api/v1/gameoflife/board/increment', 'POST');
+        const request = new Request('http://localhost:8080/gameoflife/api/v1/board/increment', 'POST');
 
         const { onCycleActionCompleted } = this.props;
         request.execute().then(response => {
@@ -40,7 +40,7 @@ export default class CycleActions extends React.Component<IProps, {}> {
     }
 
     private decrementCycle = () => {
-        const request = new Request('http://localhost:8080/api/v1/gameoflife/board/decrement', 'POST');
+        const request = new Request('http://localhost:8080/gameoflife/api/v1/board/decrement', 'POST');
 
         const { onCycleActionCompleted } = this.props;
         request.execute().then(response => {

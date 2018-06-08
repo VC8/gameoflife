@@ -44,7 +44,7 @@ export default class CreateBoardForm extends React.Component<IProps, IState> {
     private createBoard = (event: any) => {
         event.preventDefault();
 
-        const request = new Request('http://localhost:8080/api/v1/gameoflife/board/create', 'POST', { rows: this.state.rows, cols: this.state.cols });
+        const request = new Request('http://localhost:8080/gameoflife/api/v1/board/create', 'POST', { rows: this.state.rows, cols: this.state.cols });
 
         request.execute().then(() => {
             this.props.onSubmitted();

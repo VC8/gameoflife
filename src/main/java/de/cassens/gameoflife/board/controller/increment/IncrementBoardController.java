@@ -1,16 +1,16 @@
 package de.cassens.gameoflife.board.controller.increment;
 
+import de.cassens.gameoflife.board.controller.ApiMapping;
 import de.cassens.gameoflife.board.service.increment.IncrementBoardCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/gameoflife/board")
+@ApiMapping
 public class IncrementBoardController {
 
     private final IncrementBoardCycleService incrementBoardCycleService;

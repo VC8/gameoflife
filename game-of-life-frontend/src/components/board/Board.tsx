@@ -74,7 +74,7 @@ class Board extends React.Component<{}, IState> {
     }
 
     private updateState = () => {
-        const request = new Request('http://localhost:8080/api/v1/gameoflife/board/state');
+        const request = new Request('http://localhost:8080/gameoflife/api/v1/board/state');
 
         const self = this;
         request.execute().then(response => {
