@@ -20,7 +20,7 @@ public class IncrementBoardController {
         this.incrementBoardCycleService = incrementBoardCycleService;
     }
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
     @PostMapping("/increment")
     public ResponseEntity incrementBoardCycle() {
         incrementBoardCycleService.incrementBoardCycle();

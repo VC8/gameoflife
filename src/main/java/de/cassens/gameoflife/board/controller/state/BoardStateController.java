@@ -19,7 +19,7 @@ public class BoardStateController {
         this.boardStateService = boardStateService;
     }
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
     @GetMapping("/state")
     public ResponseEntity<Board> getState() {
         Board state = boardStateService.getState();

@@ -20,7 +20,7 @@ public class DecrementBoardCycleController {
         this.decrementBoardCycleService = decrementBoardCycleService;
     }
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
     @PostMapping("/decrement")
     public ResponseEntity decrementBoardCycle() {
         decrementBoardCycleService.decrementBoardCycle();

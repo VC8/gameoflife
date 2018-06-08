@@ -18,7 +18,7 @@ public class CreateBoardController {
         this.createBoardService = createBoardService;
     }
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
     @PostMapping("/create")
     public ResponseEntity createBoard(@RequestBody BoardPayload boardPayload) {
         int rows = boardPayload.getRows();
