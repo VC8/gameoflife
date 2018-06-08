@@ -1,6 +1,9 @@
 package de.cassens.gameoflife.messaging;
 
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
 import de.cassens.gameoflife.messaging.config.Queues;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static java.text.MessageFormat.*;
+import static java.text.MessageFormat.format;
 
+// TODO
 @Component
 public class MessageListener extends DefaultConsumer {
 
@@ -23,7 +27,7 @@ public class MessageListener extends DefaultConsumer {
     @Override
     public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
             throws IOException {
-        String message = new String(body, "UTF-8");
+        final String message = new String(body, "UTF-8");
         final String logMessage = format("Received ''{0}''", message);
         LOGGER.info(logMessage);
     }
