@@ -5,7 +5,6 @@ import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.service.state.BoardStateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +18,6 @@ public class BoardStateController {
         this.boardStateService = boardStateService;
     }
 
-    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
     @GetMapping("/state")
     public ResponseEntity<Board> getState() {
         Board state = boardStateService.getState();

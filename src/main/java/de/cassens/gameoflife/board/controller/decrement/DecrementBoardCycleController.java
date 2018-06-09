@@ -5,7 +5,6 @@ import de.cassens.gameoflife.board.service.decrement.DecrementBoardCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +19,6 @@ public class DecrementBoardCycleController {
         this.decrementBoardCycleService = decrementBoardCycleService;
     }
 
-    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
     @PostMapping("/decrement")
     public ResponseEntity decrementBoardCycle() {
         decrementBoardCycleService.decrementBoardCycle();
