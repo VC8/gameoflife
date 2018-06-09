@@ -1,14 +1,11 @@
 package de.cassens.gameoflife.board.controller.state;
 
-import de.cassens.gameoflife.board.controller.state.BoardStateController;
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.service.state.BoardStateService;
 import de.cassens.gameoflife.cell.model.Cell;
 import de.cassens.gameoflife.testUtil.TestBoardFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
@@ -20,11 +17,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BoardStateControllerTest {
 
-    @InjectMocks
-    private BoardStateController boardStateController;
-
-    @Mock
-    private BoardStateService boardStateService;
+    private final BoardStateService boardStateService = mock(BoardStateService.class);
+    private final BoardStateController boardStateController = new BoardStateController(boardStateService);
 
     @Test
     public void shouldGetState() {
