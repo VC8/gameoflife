@@ -4,13 +4,8 @@ import com.rabbitmq.client.Channel;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static de.cassens.gameoflife.testUtil.Json.getJson;
 import static org.mockito.Mockito.mock;
 
 public class MessageListenerTest {
@@ -32,11 +27,5 @@ public class MessageListenerTest {
 
         // then
 //        assertThat();
-    }
-
-    private String getJson(String file) throws IOException {
-        final Stream<String> lines = Files.lines(Paths.get("src/test/resources/" + file));
-        final Optional<String> optional = lines.findFirst();
-        return optional.orElse("");
     }
 }

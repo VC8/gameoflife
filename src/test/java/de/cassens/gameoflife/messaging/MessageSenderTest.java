@@ -11,11 +11,8 @@ import de.cassens.gameoflife.testUtil.TestBoardFactory;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.stream.Stream;
 
+import static de.cassens.gameoflife.testUtil.Json.getJson;
 import static org.mockito.Mockito.*;
 
 public class MessageSenderTest {
@@ -89,11 +86,5 @@ public class MessageSenderTest {
 
         // then
         verify(channel).basicPublish("", "BOARD_EVENTS", null, documentJson.getBytes());
-    }
-
-    private String getJson(String file) throws IOException {
-        final Stream<String> lines = Files.lines(Paths.get("src/test/resources/" + file));
-        final Optional<String> optional = lines.findFirst();
-        return optional.orElse("");
     }
 }

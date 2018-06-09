@@ -3,7 +3,10 @@ package de.cassens.gameoflife.messaging;
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.model.payload.BoardPayload;
 import de.cassens.gameoflife.cell.model.Cell;
-import de.cassens.gameoflife.messaging.model.message.*;
+import de.cassens.gameoflife.messaging.model.message.CommandMessage;
+import de.cassens.gameoflife.messaging.model.message.DocumentMessage;
+import de.cassens.gameoflife.messaging.model.message.EventMessage;
+import de.cassens.gameoflife.messaging.model.message.MessageFactory;
 import de.cassens.gameoflife.messaging.model.type.CommandType;
 import de.cassens.gameoflife.messaging.model.type.EventType;
 import de.cassens.gameoflife.messaging.model.type.MessageType;
@@ -13,11 +16,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.stream.Stream;
 
+import static de.cassens.gameoflife.testUtil.Json.getJson;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -124,11 +124,5 @@ public class MessageConverterTest {
         final Board board = new Board(cells, 2);
         final MessageFactory messageFactory = new MessageFactory();
         return messageFactory.createDocumentMessage(board);
-    }
-
-    private String getJson(String file) throws IOException {
-        final Stream<String> lines = Files.lines(Paths.get("src/test/resources/" + file));
-        final Optional<String> optional = lines.findFirst();
-        return optional.orElse("");
     }
 }
