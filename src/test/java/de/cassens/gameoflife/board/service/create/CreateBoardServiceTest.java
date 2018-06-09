@@ -3,11 +3,14 @@ package de.cassens.gameoflife.board.service.create;
 import de.cassens.gameoflife.board.model.event.BoardEvent;
 import de.cassens.gameoflife.board.model.event.BoardEventFactory;
 import de.cassens.gameoflife.board.repository.BoardEventRepository;
+import de.cassens.gameoflife.messaging.EventEmitter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
@@ -21,23 +24,27 @@ public class CreateBoardServiceTest {
     private BoardEventFactory  boardEventFactory;
     @Mock
     private BoardEventRepository boardEventRepository;
+    @Mock
+    private EventEmitter eventEmitter;
 
     @Test
-    public void shouldCreateBoard() {
+    public void shouldCreateBoard() throws IOException {
         // given
         int rows = 3;
         int cols = 3;
-        givenCreateBoardEventFactory(rows, cols);
+        final BoardEvent boardEvent = givenCreateBoardEventFactory(rows, cols);
 
         // when
         createBoardService.createBoard(rows, cols);
 
         // then
-        verify(boardEventRepository).save(any(BoardEvent.class));
+        verify(boardEventRepository).save(boardEvent);
+        verify(eventEmitter).emitEvent(boardEvent);
     }
 
-    private void givenCreateBoardEventFactory(int rows, int cols) {
+    private BoardEvent givenCreateBoardEventFactory(int rows, int cols) {
         BoardEvent boardEvent = mock(BoardEvent.class);
         when(boardEventFactory.createBoardCreatedEvent(eq(rows), eq(cols))).thenReturn(boardEvent);
+        return boardEvent;
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @ApiMapping
 public class CreateBoardController {
@@ -22,7 +24,7 @@ public class CreateBoardController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createBoard(@RequestBody BoardPayload boardPayload) {
+    public ResponseEntity createBoard(@RequestBody BoardPayload boardPayload) throws IOException {
         int rows = boardPayload.getRows();
         int cols = boardPayload.getCols();
 

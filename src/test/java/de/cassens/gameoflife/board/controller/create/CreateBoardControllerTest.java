@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.eq;
@@ -27,7 +29,7 @@ public class CreateBoardControllerTest {
     private CreateBoardService createBoardService;
 
     @Test
-    public void shouldCreateBoard() {
+    public void shouldCreateBoard() throws IOException {
         // given
         BoardPayload boardPayload = givenBoardPayload();
 
