@@ -12,6 +12,8 @@ import de.cassens.gameoflife.messaging.model.type.EventType;
 import de.cassens.gameoflife.messaging.model.type.MessageType;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.mockito.Mockito.*;
 
 public class CommandDispatcherTest {
@@ -24,7 +26,7 @@ public class CommandDispatcherTest {
                                                                               decrementBoardCycleService);
 
     @Test
-    public void shouldDispatchIncrementBoardCommand() {
+    public void shouldDispatchIncrementBoardCommand() throws IOException {
         // given
         CommandMessage message = givenCommandMessage(CommandType.INCREMENT);
 
@@ -36,7 +38,7 @@ public class CommandDispatcherTest {
     }
 
     @Test
-    public void shouldDispatchDecrementBoardCommand() {
+    public void shouldDispatchDecrementBoardCommand() throws IOException {
         // given
         CommandMessage message = givenCommandMessage(CommandType.DECREMENT);
 
@@ -48,7 +50,7 @@ public class CommandDispatcherTest {
     }
 
     @Test
-    public void shouldDispatchCreateBoardCommand() {
+    public void shouldDispatchCreateBoardCommand() throws IOException {
         // given
         CommandMessage message = givenCommandMessage(CommandType.CREATE);
         final int count = 2;
@@ -62,7 +64,7 @@ public class CommandDispatcherTest {
     }
 
     @Test
-    public void shouldDoNothingWhenMessageTypeIsNotCommand() {
+    public void shouldDoNothingWhenMessageTypeIsNotCommand() throws IOException {
         // given
         MessageFactory messageFactory = new MessageFactory();
         final EventMessage eventMessage = messageFactory.createEventMessage(EventType.CREATED);

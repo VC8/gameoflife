@@ -5,10 +5,12 @@ import de.cassens.gameoflife.board.service.create.CreateBoardService;
 import de.cassens.gameoflife.board.service.decrement.DecrementBoardCycleService;
 import de.cassens.gameoflife.board.service.increment.IncrementBoardCycleService;
 import de.cassens.gameoflife.messaging.model.message.CommandMessage;
-import de.cassens.gameoflife.messaging.model.type.CommandType;
 import de.cassens.gameoflife.messaging.model.message.Message;
+import de.cassens.gameoflife.messaging.model.type.CommandType;
 import de.cassens.gameoflife.messaging.model.type.MessageType;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 public class CommandDispatcher {
@@ -25,7 +27,7 @@ public class CommandDispatcher {
         this.decrementBoardCycleService = decrementBoardCycleService;
     }
 
-    public void dispatchCommandFromMessage(Message message) {
+    public void dispatchCommandFromMessage(Message message) throws IOException {
         final MessageType messageType = message.getMessageType();
 
         if (MessageType.COMMAND.equals(messageType)) {
