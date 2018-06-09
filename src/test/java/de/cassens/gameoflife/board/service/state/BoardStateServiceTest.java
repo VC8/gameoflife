@@ -1,8 +1,8 @@
 package de.cassens.gameoflife.board.service.state;
 
+import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.model.event.BoardEvent;
 import de.cassens.gameoflife.board.model.event.BoardEventFactory;
-import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.cell.model.Cell;
 import de.cassens.gameoflife.testUtil.TestBoardFactory;
 import org.junit.Rule;

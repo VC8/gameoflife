@@ -10,8 +10,6 @@ import de.cassens.gameoflife.messaging.EventEmitter;
 import de.cassens.gameoflife.testUtil.TestBoardFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
@@ -23,17 +21,12 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class IncrementBoardCycleServiceTest {
 
-    @InjectMocks
-    private IncrementBoardCycleService incrementBoardCycleService;
-
-    @Mock
-    private BoardStateService boardStateService;
-    @Mock
-    private BoardEventRepository boardEventRepository;
-    @Mock
-    private BoardEventFactory boardEventFactory;
-    @Mock
-    private EventEmitter eventEmitter;
+    private BoardStateService boardStateService = mock(BoardStateService.class);
+    private BoardEventRepository boardEventRepository = mock(BoardEventRepository.class);
+    private BoardEventFactory boardEventFactory = mock(BoardEventFactory.class);
+    private EventEmitter eventEmitter = mock(EventEmitter.class);
+    private IncrementBoardCycleService incrementBoardCycleService = new IncrementBoardCycleService(
+            boardStateService, boardEventFactory, boardEventRepository, eventEmitter);
 
     @Test
     public void shouldIncrementBoardCycle() throws IOException {

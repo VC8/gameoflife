@@ -6,8 +6,6 @@ import de.cassens.gameoflife.board.repository.BoardEventRepository;
 import de.cassens.gameoflife.messaging.EventEmitter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
@@ -17,15 +15,10 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class CreateBoardServiceTest {
 
-    @InjectMocks
-    private CreateBoardService createBoardService;
-
-    @Mock
-    private BoardEventFactory  boardEventFactory;
-    @Mock
-    private BoardEventRepository boardEventRepository;
-    @Mock
-    private EventEmitter eventEmitter;
+    private final BoardEventFactory  boardEventFactory = mock(BoardEventFactory.class);
+    private final BoardEventRepository boardEventRepository = mock(BoardEventRepository.class);
+    private final EventEmitter eventEmitter = mock(EventEmitter.class);
+    private final CreateBoardService createBoardService = new CreateBoardService(boardEventFactory, boardEventRepository, eventEmitter);
 
     @Test
     public void shouldCreateBoard() throws IOException {
