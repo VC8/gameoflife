@@ -3,7 +3,10 @@ package de.cassens.gameoflife.messaging.model;
 import de.cassens.gameoflife.board.model.Board;
 import de.cassens.gameoflife.board.model.payload.BoardPayload;
 import de.cassens.gameoflife.cell.model.Cell;
-import de.cassens.gameoflife.messaging.model.message.*;
+import de.cassens.gameoflife.messaging.model.message.CommandMessage;
+import de.cassens.gameoflife.messaging.model.message.DocumentMessage;
+import de.cassens.gameoflife.messaging.model.message.EventMessage;
+import de.cassens.gameoflife.messaging.model.message.MessageFactory;
 import de.cassens.gameoflife.messaging.model.type.CommandType;
 import de.cassens.gameoflife.messaging.model.type.EventType;
 import de.cassens.gameoflife.messaging.model.type.MessageType;
@@ -14,7 +17,6 @@ import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
 
 public class MessageFactoryTest {
 
