@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @ApiMapping
 public class IncrementBoardController {
@@ -20,7 +22,7 @@ public class IncrementBoardController {
     }
 
     @PostMapping("/increment")
-    public ResponseEntity incrementBoardCycle() {
+    public ResponseEntity incrementBoardCycle() throws IOException {
         incrementBoardCycleService.incrementBoardCycle();
 
         return new ResponseEntity(HttpStatus.OK);

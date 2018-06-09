@@ -8,9 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IncrementBoardControllerTest {
@@ -21,7 +23,7 @@ public class IncrementBoardControllerTest {
     private IncrementBoardCycleService incrementBoardCycleService;
 
     @Test
-    public void shouldIncrementBoardCycle() {
+    public void shouldIncrementBoardCycle() throws IOException {
         // when
         ResponseEntity responseEntity = incrementBoardController.incrementBoardCycle();
 
