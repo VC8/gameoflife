@@ -23,7 +23,6 @@ public class CommandDispatcherTest {
                                                                               incrementBoardCycleService,
                                                                               decrementBoardCycleService);
 
-    @SuppressWarnings("unchecked")
     @Test
     public void shouldDispatchIncrementBoardCommand() {
         // given
@@ -36,7 +35,6 @@ public class CommandDispatcherTest {
         verify(incrementBoardCycleService).incrementBoardCycle();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void shouldDispatchDecrementBoardCommand() {
         // given
@@ -49,7 +47,6 @@ public class CommandDispatcherTest {
         verify(decrementBoardCycleService).decrementBoardCycle();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void shouldDispatchCreateBoardCommand() {
         // given

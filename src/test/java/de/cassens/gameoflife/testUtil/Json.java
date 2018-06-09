@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 public class Json {
     private Json() {
     }
-    public static final String getJson(String fileName) throws IOException {
+    public static String getJson(String fileName) throws IOException {
         final Stream<String> lines = Files.lines(Paths.get("src/test/resources/" + fileName));
         final Optional<String> optional = lines.findFirst();
         return optional.orElse("");
