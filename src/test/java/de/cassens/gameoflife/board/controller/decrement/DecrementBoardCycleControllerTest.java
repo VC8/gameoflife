@@ -1,6 +1,5 @@
 package de.cassens.gameoflife.board.controller.decrement;
 
-import de.cassens.gameoflife.board.controller.decrement.DecrementBoardCycleController;
 import de.cassens.gameoflife.board.service.decrement.DecrementBoardCycleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,9 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.*;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DecrementBoardCycleControllerTest {
@@ -23,7 +24,7 @@ public class DecrementBoardCycleControllerTest {
     private DecrementBoardCycleService decrementBoardCycleService;
 
     @Test
-    public void shouldDecrementBoardCycle() {
+    public void shouldDecrementBoardCycle() throws IOException {
         // when
         ResponseEntity responseEntity = decrementBoardCycleController.decrementBoardCycle();
 

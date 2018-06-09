@@ -5,17 +5,15 @@ import de.cassens.gameoflife.board.model.event.BoardEvent;
 import de.cassens.gameoflife.board.model.event.BoardEventFactory;
 import de.cassens.gameoflife.board.repository.BoardEventRepository;
 import de.cassens.gameoflife.board.service.state.BoardStateService;
+import de.cassens.gameoflife.messaging.EventEmitter;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.data.domain.Sort;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
 import java.util.stream.Stream;
 
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class DecrementBoardCycleServiceTest {
@@ -29,14 +27,14 @@ public class DecrementBoardCycleServiceTest {
     private final BoardEventFactory boardEventFactory = mock(BoardEventFactory.class);
     private final BoardStateService boardStateService = mock(BoardStateService.class);
     private final BoardEvent boardEvent = mock(BoardEvent.class);
+    private final EventEmitter eventEmitter = mock(EventEmitter.class);
 
     private DecrementBoardCycleService decrementBoardCycleService = new DecrementBoardCycleService(
-            boardEventRepository, boardEventFactory, boardStateService
-    );
+            boardEventRepository, boardEventFactory, boardStateService,
+            eventEmitter);
 
-    @SuppressWarnings("unchecked")
     @Test
-    public void shouldDecrementBoardCycle() {
+    public void shouldDecrementBoardCycle() throws IOException {
         // given
         givenState();
         givenBoardEventRepository();
@@ -46,16 +44,17 @@ public class DecrementBoardCycleServiceTest {
         decrementBoardCycleService.decrementBoardCycle();
 
         // then
-        verify(boardEventRepository).save(eq(boardDecrementedEvent));
+        verify(boardEventRepository).save(boardDecrementedEvent);
+        verify(eventEmitter).emitEvent(boardDecrementedEvent);
     }
 
     @SuppressWarnings("unchecked")
     @Test
-    public void shouldThrowIllegalStateExceptionWhenBoardCycleIsNeverIncremented() {
+    public void shouldThrowIllegalStateExceptionWhenBoardCycleIsNeverIncremented() throws IOException {
         // given
         givenState();
 
-        when(boardEventRepository.findAllByGenerationLessThan(eq(GENERATION), eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(mock(Stream.class));
+        when(boardEventRepository.findAllByGenerationLessThan(GENERATION, new Sort(Sort.Direction.DESC, "timestamp"))).thenReturn(mock(Stream.class));
 
         // expect
         expectedException.expect(IllegalStateException.class);
@@ -67,13 +66,13 @@ public class DecrementBoardCycleServiceTest {
 
     private BoardEvent givenBoardEvent() {
         BoardEvent boardDecrementedEvent = mock(BoardEvent.class);
-        when(boardEventFactory.createBoardDecrementedEvent(eq(boardEvent))).thenReturn(boardDecrementedEvent);
+        when(boardEventFactory.createBoardDecrementedEvent(boardEvent)).thenReturn(boardDecrementedEvent);
         return boardDecrementedEvent;
     }
 
     private void givenBoardEventRepository() {
         Stream<BoardEvent> stream = Stream.of(boardEvent, mock(BoardEvent.class), mock(BoardEvent.class));
-        when(boardEventRepository.findAllByGenerationLessThan(eq(GENERATION), eq(new Sort(Sort.Direction.DESC, "timestamp")))).thenReturn(stream);
+        when(boardEventRepository.findAllByGenerationLessThan(GENERATION, new Sort(Sort.Direction.DESC, "timestamp"))).thenReturn(stream);
     }
 
     private void givenState() {

@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @ApiMapping
 public class DecrementBoardCycleController {
@@ -20,7 +22,7 @@ public class DecrementBoardCycleController {
     }
 
     @PostMapping("/decrement")
-    public ResponseEntity decrementBoardCycle() {
+    public ResponseEntity decrementBoardCycle() throws IOException {
         decrementBoardCycleService.decrementBoardCycle();
 
         return new ResponseEntity(HttpStatus.OK);
