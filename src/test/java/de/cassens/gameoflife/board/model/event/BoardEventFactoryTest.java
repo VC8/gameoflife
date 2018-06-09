@@ -3,8 +3,6 @@ package de.cassens.gameoflife.board.model.event;
 import de.cassens.gameoflife.cell.model.Cell;
 import de.cassens.gameoflife.testUtil.TestBoardFactory;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,7 +13,6 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class BoardEventFactoryTest {
 
     private BoardEventFactory boardEventFactory = new BoardEventFactory();
