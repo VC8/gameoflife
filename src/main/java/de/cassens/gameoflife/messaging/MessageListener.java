@@ -34,10 +34,15 @@ public class MessageListener extends DefaultConsumer {
     public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
             throws IOException {
         final String messageJson = new String(body, "UTF-8");
-        final String logMessage = format("Received ''{0}''", messageJson);
-        LOGGER.info(logMessage);
+
+        logMessage(messageJson);
 
         final Message message = messageConverter.convertToMessage(messageJson);
         commandDispatcher.dispatchCommandFromMessage(message);
+    }
+
+    private void logMessage(String messageJson) {
+        final String logMessage = format("Received ''{0}''", messageJson);
+        LOGGER.info(logMessage);
     }
 }

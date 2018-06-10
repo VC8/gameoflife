@@ -7,13 +7,19 @@ import de.cassens.gameoflife.messaging.model.message.DocumentMessage;
 import de.cassens.gameoflife.messaging.model.message.EventMessage;
 import de.cassens.gameoflife.messaging.model.message.MessageFactory;
 import de.cassens.gameoflife.messaging.model.type.EventType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static java.lang.String.*;
+import static java.text.MessageFormat.format;
+
 @Component
 public class MessageSender {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageSender.class);
     private final Channel channel;
     private final MessageFactory messageFactory;
     private final MessageConverter messageConverter;
@@ -49,6 +55,7 @@ public class MessageSender {
     }
 
     private void logMessage(String messageJson) {
-        System.out.println("Sent '" + messageJson + "'");
+        final String logMessage = format("Sent ''{0}''", messageJson);
+        LOGGER.info(logMessage);
     }
 }
