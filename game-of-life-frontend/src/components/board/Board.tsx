@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import * as Ampq from 'amqplib';
 import * as React from 'react';
 import GameBoard from '../../model/board/Board';
 import Cell from '../../model/cell/Cell';
@@ -24,6 +25,17 @@ class Board extends React.Component<{}, IState> {
 
         const gameboard = new GameBoard();
         this.state = { board: gameboard, isCreateBoardFormVisible: false };
+
+        Ampq.connect('amqp://localhost', (error: any, conection: any) => {
+            conection.createChannel((error2: any, channel: any) => {
+                const queueName = 'BOARD_EVENTS';
+
+                channel.assertQueue(queueName, { durable: false });
+                channel.consume(queueName, (message: any) => {
+                    console.log(message);
+                });
+            });
+        });
     }
 
     public render(): JSX.Element {
