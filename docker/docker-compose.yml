@@ -3,10 +3,9 @@ version: '3'
 services:
   mongodb:
     container_name: mongodb
-    image: mongo:3.6
+    image: mongo:3.6.4
     ports:
       - "27017:27017"
-    restart: always
   game_of_life:
     container_name: game_of_life
     image: venancecassens/gameoflife:1.0.1
